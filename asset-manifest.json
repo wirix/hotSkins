@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/hotSkins/static/css/main.073c9b0a.css",
+    "main.js": "/hotSkins/static/js/main.dbfc46ef.js",
+    "static/js/787.704ba0f8.chunk.js": "/hotSkins/static/js/787.704ba0f8.chunk.js",
+    "static/media/logo.svg": "/hotSkins/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/hotSkins/index.html",
+    "main.073c9b0a.css.map": "/hotSkins/static/css/main.073c9b0a.css.map",
+    "main.dbfc46ef.js.map": "/hotSkins/static/js/main.dbfc46ef.js.map",
+    "787.704ba0f8.chunk.js.map": "/hotSkins/static/js/787.704ba0f8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.dbfc46ef.js"
+  ]
+}
