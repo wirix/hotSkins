@@ -1,19 +1,14 @@
 import './App.scss';
-import { Link } from 'react-router-dom'
+import Footer from './components/Footer/Footer';
+import Navbar from './components/Navbar/Navbar';
+import Main from './components/Main/Main';
 
 const App = () => {
   return (
     <div className={'app'}>
-      <div className={'container'}>
-        <header className={'header'}>
-          <Link to='' className={'logo'}><span>Hot</span><span>Skins</span></Link>
-          <div className={'info'}>
-            <Link to='/help'>Помощь</Link>
-            <Link to='/contacts'>Контакты</Link>
-          </div>
-          <button className={'btn'}>Войти</button>
-        </header>
-      </div>
+      <Navbar />
+      <Main />
+      <Footer />
     </div>
   )
 }

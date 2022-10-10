@@ -1,0 +1,38 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .title {
+    max-width: 650px;
+    font-size: 56px;
+    font-weight: 700;
+
+    @media (max-width: 1024px) {
+      font-size: 52px;
+    }
+  }
+
+  @media (max-width: 730px) {
+    align-items: center;
+
+    .title {
+      text-align: center;
+      font-size: 42px;
+      font-weight: 500;
+
+      @media (max-width: 545px) {
+        font-size: 35px;
+      }
+
+      @media (max-width: 430px) {
+        font-size: 28px;
+        font-weight: 400;
+      }
+
+      @media (max-width: 385px) {
+        font-size: 25px;
+      }
+    }
+  }
+}
