@@ -5,6 +5,71 @@
   padding: 16px 0;
   width: 100%;
 
+  .navbar-mobile {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 67px;
+    z-index: 1000;
+
+    padding: 18px 0 24px;
+    background-color: #272E3B;
+
+    div {
+
+      .account {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+
+        div {
+          position: relative;
+
+          img {
+            position: absolute;
+          }
+
+          .username,
+          .email {
+            font-weight: 100;
+            margin-left: 52px;
+          }
+
+          .username {
+            opacity: .5;
+          }
+          
+          .email {
+            color: #F4C038;
+          }
+        }
+        
+        i {
+          font-size: 26px;
+        }
+      }
+
+      .link {
+        display: flex;
+        flex-direction: column;
+
+        &-item {
+          padding: 17px 0;
+          border-bottom: 1px solid #3D4554;
+          text-decoration: none;
+          color: #fff;
+
+          &:first-child {
+            border-top: 1px solid #3D4554;
+          }
+        }
+      }
+    }
+  }
+
   .burger {
     display: flex;
     align-items: center;
@@ -13,8 +78,6 @@
       display: none;
     }
   }
-
-  
 
   .logo {
     display: flex;
