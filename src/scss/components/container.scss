@@ -6,6 +6,9 @@
   border-bottom: 1px solid #272E3B;
 
   &-transparent {
+    margin: 0 auto;
+    padding: 0 108px;
+    width: 100%;
     background-color: transparent;
     border-bottom: 0;
   }
@@ -26,5 +29,11 @@
 
   @media (max-width: 730px) {
     padding: 0 18px;
+
+    &-flex {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
   }
 }

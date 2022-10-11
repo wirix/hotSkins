@@ -3,14 +3,14 @@ import './Main.scss'
 
 const Main = () => {
   return (
-    <div className={'container container-transparent'}>
-      <main className={'main'}>
+    <main className={'main'}>
+      <div className={'container container-transparent container-flex'}>
         <div className={'title'}>
-          <p>Принимайте платежи от&nbsp;пользователей с&nbsp;помощью скинов CS:GO</p>
+          <p>Открывайте кейсы по&nbsp;самым лучшим ценам</p>
         </div>
-        <button className={'btn btn-big'}>Подключить проект</button>
-      </main>
-    </div>
+        <button className={'btn btn-big'}>Регистрация</button>
+      </div>
+    </main>
   )
 }
 
