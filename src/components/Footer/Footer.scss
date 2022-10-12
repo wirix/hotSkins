@@ -19,13 +19,13 @@
       color: #fff;
       opacity: .5;
 
-        &:last-child {
-          margin-right: 0;
-        }
+      &:last-child {
+        margin-right: 0;
       }
     }
-
-    @media (max-width: 730px) {
-      display: none;
-    }
   }
+
+  @media (max-width: 730px) {
+    display: none;
+  }
+}

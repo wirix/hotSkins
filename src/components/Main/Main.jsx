@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './Main.scss'
 
 const Main = () => {
@@ -8,7 +9,7 @@ const Main = () => {
         <div className={'title'}>
           <p>Открывайте кейсы по&nbsp;самым лучшим ценам</p>
         </div>
-        <button className={'btn btn-big'}>Регистрация</button>
+        <Link to={'/login'} className={'btn btn-big'}>Регистрация</Link>
       </div>
     </main>
   )

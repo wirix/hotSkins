@@ -1,7 +1,7 @@
 import React from 'react'
-import './Login.scss'
+import { Formik } from 'formik'
+import '../SignIn/SignIn.scss'
 import login from '../../assets/img/login.png'
-import {Formik} from 'formik'
 
 const Login = () => {
   return (
@@ -13,27 +13,34 @@ const Login = () => {
         <div className={'form'}>
           <h1>HotSkins</h1>
           <Formik
-            initialValues={{email: '', password: '' }}
+            initialValues={{ name: '', email: '', password: '' }}
             validateOnBlur
             onSubmit={(values) => {
               console.log(values)
             }}>
-            {({values, errors, touched, handleChange, handleBlur, handleSubmit, isValid, dirty}) => (
+            {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isValid, dirty }) => (
               <form onSubmit={handleSubmit} className={'formik'}>
-                <input 
-                  type="text" 
-                  name='email' 
-                  onChange={handleChange} 
-                  value={values.email} 
+                <input
+                  type="text"
+                  name='name'
+                  onChange={handleChange}
+                  value={values.name}
                   onBlur={handleBlur}
-                  placeholder={'Ваш email'}/>
-                <input 
-                  type="password" 
-                  name='password' 
-                  onChange={handleChange} 
-                  value={values.password} 
+                  placeholder={'Имя'} />
+                <input
+                  type="text"
+                  name='email'
+                  onChange={handleChange}
+                  value={values.email}
                   onBlur={handleBlur}
-                  placeholder={'Пароль'}/>
+                  placeholder={'Ваш email'} />
+                <input
+                  type="password"
+                  name='password'
+                  onChange={handleChange}
+                  value={values.password}
+                  onBlur={handleBlur}
+                  placeholder={'Пароль'} />
                 <button className={'btn'} onSubmit={handleSubmit}>Войти</button>
               </form>
             )}
