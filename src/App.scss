@@ -22,6 +22,8 @@ body {
   font-family: 'Rubik', sans-serif;
   font-size: 18px;
   color: #fff;
+  min-height: 100vh;
+  position: relative;
 }
 
 ::-webkit-scrollbar {

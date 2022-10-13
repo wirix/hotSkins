@@ -2,6 +2,7 @@ import React from 'react'
 import './SignIn.scss'
 import login from '../../assets/img/login.png'
 import {Formik} from 'formik'
+import { funSignInWithEmailAndPassword } from '../../firebase'
 
 const SighIn = () => {
   return (
@@ -16,7 +17,7 @@ const SighIn = () => {
             initialValues={{email: '', password: '' }}
             validateOnBlur
             onSubmit={(values) => {
-              console.log(values)
+              funSignInWithEmailAndPassword(values.email, values.password)
             }}>
             {({values, errors, touched, handleChange, handleBlur, handleSubmit, isValid, dirty}) => (
               <form onSubmit={handleSubmit} className={'formik'}>

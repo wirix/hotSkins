@@ -2,6 +2,7 @@ import React from 'react'
 import { Formik } from 'formik'
 import '../SignIn/SignIn.scss'
 import login from '../../assets/img/login.png'
+import { registerWithEmailAndPassword } from '../../firebase'
 
 const Login = () => {
   return (
@@ -16,7 +17,7 @@ const Login = () => {
             initialValues={{ name: '', email: '', password: '' }}
             validateOnBlur
             onSubmit={(values) => {
-              console.log(values)
+              registerWithEmailAndPassword(values.name, values.email, values.password)
             }}>
             {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isValid, dirty }) => (
               <form onSubmit={handleSubmit} className={'formik'}>
@@ -41,7 +42,7 @@ const Login = () => {
                   value={values.password}
                   onBlur={handleBlur}
                   placeholder={'Пароль'} />
-                <button className={'btn'} onSubmit={handleSubmit}>Войти</button>
+                <button className={'btn'} onSubmit={handleSubmit}>Регистарция</button>
               </form>
             )}
           </Formik>
