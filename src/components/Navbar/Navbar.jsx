@@ -6,14 +6,15 @@ import { useEffect } from 'react'
 import { useRef } from 'react'
 import { logout } from '../../firebase'
 import GetAuth from '../../utils/GetAuth'
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 
 const Navbar = () => {
   const [isNavbar, setIsNavbar] = useState(false)
   const iconRef = useRef(null)
   const isAuth = GetAuth()
-  const email = useSelector((state) => state.login.email)
+  // const email = useSelector((state) => state.login.email)
 
+  // при клике на любую другую область, меню закрывается
   useEffect(() => {
     const handleEventClick = (e) => {
       if (!e.path.includes(iconRef.current)) {
@@ -30,14 +31,6 @@ const Navbar = () => {
       <header className={'header'}>
         <div className={`navbar-mobile ${isNavbar ? 'navbar-mobile-open' : 'navbar-mobile-close'}`}>
           <div className={'container container-transparent'}>
-            <div className={'account'}>
-              <div>
-                <img src={userPhoto} alt="" />
-                <div className={'username'}>Wirix</div>
-                <div className={'email'}>email@gmail.com</div>
-              </div>
-              <i className="ri-logout-box-line"></i>
-            </div>
             <div className={'link'}>
               <Link to='/' className={'link-item'}>
                 Помощь
@@ -59,7 +52,15 @@ const Navbar = () => {
           <Link to={'/help'}>Помощь</Link>
           <Link to={'/contacts'}>Контакты</Link>
         </div>
-        {isAuth ? <div className={'btn'} onClick={() => logout()}>Выйти из {email}</div> : <Link to={'/signin'} className={'btn'}>Войти</Link>}
+        {isAuth &&
+          <div className={'account'}>
+            <Link to='/profile'>
+              <img src={userPhoto} alt="" />
+              {/* <div className={'email'}>{email.split('@')[0]}</div> */}
+            </Link>
+            <i onClick={() => logout()} className="ri-logout-box-line"></i>
+          </div>}
+        {isAuth ? null : <Link to={'/signin'} className={'btn'}>Войти</Link>}
       </header>
     </div>
   )

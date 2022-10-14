@@ -8,9 +8,9 @@ const Footer = () => {
       <footer className={'footer'}>
         <div className={'copyright'}>Copyright © Skincash.ru</div>
         <div>
-          <Link to='/'>Помощь</Link>
-          <Link to='/'>Контакты</Link>
-          <Link to='/'>Пользовательское соглашение</Link>
+          <Link to='/help'>Помощь</Link>
+          <Link to='/contacts'>Контакты</Link>
+          <Link to='/?'>Пользовательское соглашение</Link>
         </div>
       </footer>
     </div>

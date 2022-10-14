@@ -11,11 +11,13 @@ import { auth } from './firebase';
 import { useDispatch } from 'react-redux'
 import { setEmail } from './redux/slices/loginSlice';
 import { useEffect } from 'react';
+import Profile from './components/Profile/Profile';
 
 const App = () => {
   const isAuth = GetAuth()
   const dispatch = useDispatch()
-  
+
+  // оборачиваю в useEffect тк появляется ошибка об одновремнном рендере двух компонент
   useEffect(() => {
     if (auth.currentUser) {
       dispatch(setEmail())
@@ -28,6 +30,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={isAuth ? <Navigate to='/home' /> : <Main />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/signin" element={<SighIn />} />
         <Route path='/login' element={<Login />} />
       </Routes>

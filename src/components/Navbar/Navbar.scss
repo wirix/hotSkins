@@ -6,6 +6,37 @@
   width: 100%;
   z-index: 1000;
 
+  .account {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    div {
+      display: flex;
+      
+      a {
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+      }
+
+      // .email {
+      //   font-size: 17px;
+      //   font-weight: 100;
+      //   margin: 0 10px;
+      //   opacity: .5;
+      // }
+    }
+
+    i {
+      align-self: center;
+      cursor: pointer;
+      font-size: 18.5px;
+      opacity: .5;
+      margin-left: 10px;
+    }
+  }
+
   .navbar-mobile {
     display: flex;
     flex-direction: column;
