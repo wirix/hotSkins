@@ -6,11 +6,13 @@ import { useEffect } from 'react'
 import { useRef } from 'react'
 import { logout } from '../../firebase'
 import GetAuth from '../../utils/GetAuth'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
   const [isNavbar, setIsNavbar] = useState(false)
   const iconRef = useRef(null)
-  let user = GetAuth()
+  const isAuth = GetAuth()
+  const email = useSelector((state) => state.login.email)
 
   useEffect(() => {
     const handleEventClick = (e) => {
@@ -57,7 +59,7 @@ const Navbar = () => {
           <Link to={'/help'}>Помощь</Link>
           <Link to={'/contacts'}>Контакты</Link>
         </div>
-        {user ? <div className={'btn'} onClick={() => logout()}>Выйти</div> : <Link to={'/signin'} className={'btn'}>Войти</Link>}
+        {isAuth ? <div className={'btn'} onClick={() => logout()}>Выйти из {email}</div> : <Link to={'/signin'} className={'btn'}>Войти</Link>}
       </header>
     </div>
   )

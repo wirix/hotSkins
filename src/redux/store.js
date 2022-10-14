@@ -4,7 +4,7 @@ import loginSlice from './slices/loginSlice'
 export const store = configureStore({
   reducer: {
     login: loginSlice,
-  },
+  }
 })
 
-window.store = store.getState()
+window.store = store
