@@ -6,15 +6,15 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import SighIn from './components/SignIn/SignIn';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
-import GetAuth from './utils/GetAuth';
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux'
 import { setEmail } from './redux/slices/loginSlice';
 import { useEffect } from 'react';
 import Profile from './components/Profile/Profile';
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const App = () => {
-  const isAuth = GetAuth()
+  const [isAuth, loading] = useAuthState(auth);
   const dispatch = useDispatch()
 
   // оборачиваю в useEffect тк появляется ошибка об одновремнном рендере двух компонент
@@ -23,6 +23,11 @@ const App = () => {
       dispatch(setEmail())
     }
   }, [isAuth, dispatch])
+
+  // пока загружаются данные аккаунта идет загрузка
+  if (loading) {
+    return null
+  }
  
   return (
     <div className={'app'}>

@@ -51,11 +51,11 @@
     transition: all .2s linear;
 
     &-open {
-      top: 67px;
+      top: 68px;
     }
 
     &-close {
-      top: -217px;
+      top: -234px;
     }
 
     div {
@@ -141,9 +141,10 @@
       text-decoration: none;
       color: #fff;
       font-weight: 300;
+      margin-right: 30px;
 
-      &:first-child {
-        margin-right: 30px;
+      &:last-child {
+        margin-right: 0;
       }
     }
   }

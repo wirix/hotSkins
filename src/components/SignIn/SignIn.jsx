@@ -1,10 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './SignIn.scss'
 import login from '../../assets/img/login.png'
 import {Formik} from 'formik'
 import { funSignInWithEmailAndPassword } from '../../firebase'
+import { useLocation, useNavigate } from 'react-router-dom'
+import GetAuth from '../../utils/GetAuth'
 
 const SighIn = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const isAuth = GetAuth()
+  
+  // после входа перекодывает на главную
+  useEffect(() => {
+    if (location.pathname !== '/home' && isAuth) {
+      navigate('/home')
+    }
+  }, [isAuth, navigate, location.pathname])
+  
+
   return (
     <div className={'container-transparent align-center'}>
       <div className={'login'}>

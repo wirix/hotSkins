@@ -6,13 +6,11 @@ import { useEffect } from 'react'
 import { useRef } from 'react'
 import { logout } from '../../firebase'
 import GetAuth from '../../utils/GetAuth'
-// import { useSelector } from 'react-redux'
 
 const Navbar = () => {
   const [isNavbar, setIsNavbar] = useState(false)
   const iconRef = useRef(null)
   const isAuth = GetAuth()
-  // const email = useSelector((state) => state.login.email)
 
   // при клике на любую другую область, меню закрывается
   useEffect(() => {
@@ -32,6 +30,9 @@ const Navbar = () => {
         <div className={`navbar-mobile ${isNavbar ? 'navbar-mobile-open' : 'navbar-mobile-close'}`}>
           <div className={'container container-transparent'}>
             <div className={'link'}>
+              <Link to='/home' className={'link-item'}>
+                Кейсы
+              </Link>
               <Link to='/' className={'link-item'}>
                 Помощь
               </Link>
@@ -46,9 +47,10 @@ const Navbar = () => {
             isNavbar ? <i ref={iconRef} className="ri-close-line" onClick={() => setIsNavbar(!isNavbar)}></i>
               : <i ref={iconRef} className="ri-menu-2-line" onClick={() => setIsNavbar(!isNavbar)}></i>
           }
-          <Link to={'/'} className={'logo'}><span>Hot</span><span>Skins</span></Link>
+          <Link to={`${isAuth ? '/home' : '/'}`} className={'logo'}><span>Hot</span><span>Skins</span></Link>
         </div>
         <div className={'info'}>
+          <Link to={'/home'}>Кейсы</Link>
           <Link to={'/help'}>Помощь</Link>
           <Link to={'/contacts'}>Контакты</Link>
         </div>

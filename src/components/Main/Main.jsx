@@ -7,7 +7,7 @@ const Main = () => {
     <main className={'main'}>
       <div className={'container container-transparent container-flex'}>
         <div className={'title'}>
-          <p>Открывайте кейсы по&nbsp;самым лучшим ценам</p>
+          <p>Открывайте кейсы по&nbsp;самым лучшим ценам !</p>
         </div>
         <Link to={'/login'} className={'btn btn-big'}>Регистрация</Link>
       </div>

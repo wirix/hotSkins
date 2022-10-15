@@ -6,6 +6,7 @@
   align-items: center;
   padding: 0 5px;
   cursor: pointer;
+  margin-bottom: 35px;
 
   .subtitle {
     text-align: center;
@@ -22,5 +23,33 @@
 
   button {
     margin-top: 18px;
+  }
+
+  @media (max-width: 748px) {
+    width: 200px;
+    height: 200px;
+
+    img {
+      width: 200px;
+      height: 200px;
+    }
+
+    .subtitle {
+      bottom: -5px;
+    }
+  }
+
+  @media (max-width: 436px) {
+    width: 180px;
+    height: 180px;
+
+    img {
+      width: 180px;
+      height: 180px;
+    }
+
+    .subtitle {
+      font-size: 13.5px;
+    }
   }
 }
