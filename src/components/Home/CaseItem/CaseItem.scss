@@ -1,0 +1,26 @@
+.cases-item {
+  width: 220px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 5px;
+  cursor: pointer;
+
+  .subtitle {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    position: absolute;
+    bottom: 43px;
+  }
+
+  img {
+    width: 220px;
+    height: 220px;
+  }
+
+  button {
+    margin-top: 18px;
+  }
+}
