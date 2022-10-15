@@ -11,7 +11,7 @@ const SighIn = () => {
   const location = useLocation()
   const isAuth = GetAuth()
   
-  // после входа перекодывает на главную
+  // после входа перекидывает на главную
   useEffect(() => {
     if (location.pathname !== '/home' && isAuth) {
       navigate('/home')
