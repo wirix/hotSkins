@@ -87,9 +87,9 @@ const Login = () => {
                 </div>
                 
                 {reasonsError && 
-                  <div className={'reasons-error'}><i className="ri-error-warning-line"></i> {reasonsError} <Link to='/signin'> Войти</Link></div>}
+                  <div className={'reasons-error'}><i className="ri-error-warning-line"></i> {reasonsError} <Link className={'signin'} to='/signin'> Войти</Link></div>}
                 
-                <button className={`btn ${reasonsError && errors.password && 'btn-mb'}`} disabled={errors.email || errors.password || errors.name} onSubmit={handleSubmit}>Регистарция</button>
+                <button className={`btn ${reasonsError && errors.password && 'btn-mb'}`} disabled={errors.email || errors.password || errors.name} onSubmit={handleSubmit}>Регистрация</button>
               </form>
             )}
           </Formik>

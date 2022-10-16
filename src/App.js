@@ -12,6 +12,7 @@ import { setEmail } from './redux/slices/loginSlice';
 import { useEffect } from 'react';
 import Profile from './components/Profile/Profile';
 import { useAuthState } from "react-firebase-hooks/auth";
+import CaseItemData from './components/CaseItemData/CaseItemData';
 
 const App = () => {
   const [isAuth, loading] = useAuthState(auth);
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/signin" element={<SighIn />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/cases/:id' element={<CaseItemData />} />
       </Routes>
       <Footer />
     </div>

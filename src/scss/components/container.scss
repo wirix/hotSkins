@@ -28,8 +28,17 @@
     padding: 0;
   }
 
+  &-black {
+    padding: 20px 108px 100px;
+    background-color: #1e1e25;
+  }
+
   @media (max-width: 1024px) {
     padding: 0 44px;
+
+    &-black {
+      padding: 20px 44px 100px;
+    }
   }
 
   @media (max-width: 730px) {
@@ -43,6 +52,10 @@
 
     &-footer {
       display: none;
+    }
+
+    &-black {
+      padding: 20px 18px;
     }
   }
 }
