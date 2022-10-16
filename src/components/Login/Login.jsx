@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Formik } from 'formik'
 import '../Login/Login.scss'
 import login from '../../assets/img/login.png'
 import { registerWithEmailAndPassword } from '../../firebase'
 import * as Yup from 'yup'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import GetAuth from '../../utils/GetAuth'
 
 const Login = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const isAuth = GetAuth()
+
   const SignupSchema = Yup.object().shape({
     email: Yup.string().email(`Неверно указан email`).required('Поле обязательно!'),
     password: Yup.string().required('Поле обязательно!').min(8, 'Минимум 8 символов'),
@@ -14,6 +20,12 @@ const Login = () => {
 
   // отображает причину ошибки внизу
   const [reasonsError, setReasonsError] = useState('')
+
+  useEffect(() => {
+    if (location.pathname !== '/home' && isAuth) {
+      navigate('/home')
+    }
+  }, [isAuth, navigate, location.pathname])
 
   return (
     <div className={'container-transparent align-center'}>
@@ -30,7 +42,7 @@ const Login = () => {
             onSubmit={ async (values) => {
               let response = await registerWithEmailAndPassword(values.name, values.email, values.password)
               if (response === 'auth/email-already-in-use') {
-                setReasonsError('Этот email уже используется')
+                setReasonsError(`Этот email уже используется`)
               }
             }}>
             {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isValid, dirty }) => (
@@ -42,7 +54,7 @@ const Login = () => {
                     onChange={handleChange}
                     value={values.name}
                     onBlur={handleBlur}
-                    placeholder={'Ваш email'} />
+                    placeholder={'Имя'} />
                   {errors.name || isValid.name ? (
                     <div className={'error'}><i className="ri-error-warning-line"></i> {errors.name}</div>
                   ) : null}
@@ -75,9 +87,9 @@ const Login = () => {
                 </div>
                 
                 {reasonsError && 
-                <div className={'reasons-error'}><i className="ri-error-warning-line"></i> {reasonsError}</div>}
+                  <div className={'reasons-error'}><i className="ri-error-warning-line"></i> {reasonsError} <Link to='/signin'> Войти</Link></div>}
                 
-                <button className={'btn'} disabled={errors.email || errors.password || errors.name} onSubmit={handleSubmit}>Регистарция</button>
+                <button className={`btn ${reasonsError && errors.password && 'btn-mb'}`} disabled={errors.email || errors.password || errors.name} onSubmit={handleSubmit}>Регистарция</button>
               </form>
             )}
           </Formik>

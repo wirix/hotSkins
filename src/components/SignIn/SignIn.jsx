@@ -44,6 +44,8 @@ const SighIn = () => {
               response.then(e => {
                 if (e === 'Firebase: Error (auth/user-not-found).') {
                   setReasonsError('Такого пользователя не существует')
+                } else if (e === 'Firebase: Error (auth/wrong-password).') {
+                  setReasonsError('Неверный пароль')
                 }
               })
             }}>
