@@ -23,20 +23,60 @@
       flex-direction: column;
       align-items: center;
 
-      input {
-        width: 320px;
-        padding: 12px 24px;
-        background-color: transparent;
-        outline: 0;
-        color: rgb(232, 232, 232);
-        border: 1px solid #3D4554;
-        border-radius: 48px;
-        margin-bottom: 24px;
+      .error {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: red;
+        position: absolute;
+        left: 23px;
+        bottom: 41px;
+        z-index: 10;
+    
+        i {
+          font-size: 13px;
+          margin-right: 4px;
+        }
       }
 
-      button {
+      &-item {
+        position: relative;
+
+        .error {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          color: red;
+          position: absolute;
+          left: 23px;
+          top: 53px;
+          z-index: 10;
+
+          i {
+            font-size: 13px;
+            margin-right: 4px;
+          }
+        }
+
+        input {
+          width: 320px;
+          padding: 12px 24px;
+          background-color: transparent;
+          outline: 0;
+          color: rgb(232, 232, 232);
+          border: 1px solid #3D4554;
+          border-radius: 48px;
+          margin-bottom: 24px;
+        }
+      }
+
+      .btn {
         margin-top: 5px;
         width: 320px;
+      }
+
+      .btn-mb {
+        margin-top: 25px;
       }
     }
   }

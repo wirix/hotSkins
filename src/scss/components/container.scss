@@ -24,6 +24,10 @@
     border-bottom: 0;
   }
 
+  &-cases {
+    padding: 0;
+  }
+
   @media (max-width: 1024px) {
     padding: 0 44px;
   }

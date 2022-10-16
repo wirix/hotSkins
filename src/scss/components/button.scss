@@ -21,6 +21,10 @@
     background-color: #8a6810;
   }
 
+  &:disabled {
+    background-color: #d3b464;
+  }
+
   &-big {
     padding: 22px 40px;
 

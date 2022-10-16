@@ -22,7 +22,6 @@ export const casesSlice = createSlice({
       state.cases = actions.payload
     },
     deleteCases: (state) => {
-      debugger
       state.cases = []
     },
   },

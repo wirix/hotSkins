@@ -18,7 +18,7 @@ const Home = () => {
   }, [dispatch, cases])
 
   return (
-    <div className={'container container-transparent'}>
+    <div className={'container container-transparent container-cases'}>
       <div className={'title'}>
         <h1>HOT OFFERS</h1>
         <h2>ЛУЧШИЕ КЕЙСЫ С БОЛЬШИМИ СКИДКАМИ</h2>

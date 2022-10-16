@@ -3,6 +3,7 @@ import { auth } from '../../firebase';
 
 const initialState = {
   email: '',
+  error: '',
 }
 
 export const loginSlice = createSlice({
@@ -13,7 +14,7 @@ export const loginSlice = createSlice({
       if (auth.currentUser) {
         state.email = auth.currentUser.email
       }
-    }
+    },
   },
 })
 

@@ -51,8 +51,6 @@ const Navbar = () => {
         </div>
         <div className={'info'}>
           <Link to={'/home'}>Кейсы</Link>
-          <Link to={'/help'}>Помощь</Link>
-          <Link to={'/contacts'}>Контакты</Link>
         </div>
         {isAuth &&
           <div className={'account'}>
