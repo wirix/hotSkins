@@ -10,7 +10,7 @@
     opacity: .9;
   }
 
-  div {
+  .case-form {
     display: flex;
     justify-content: center;
 
@@ -45,8 +45,8 @@ h2 {
     border-radius: 7px;
 
     img {
-      width: 150px;
-      height: 112.5px;
+      width: 160px;
+      height: 120px;
     }
 
     &-title {
@@ -67,6 +67,14 @@ h2 {
       left: 15px;
       z-index: 10;
     }
+  }
+
+  .Mil-Spec-Grade {
+    background-image: linear-gradient(rgba(29, 56, 62, 0), rgb(0 210 255 / 22%) 90%);
+  }
+
+  .Restricted {
+    background-image: linear-gradient(rgba(27, 14, 65, 0), rgba(100, 37, 163, 0.24) 90%);
   }
 
   .Classified {
