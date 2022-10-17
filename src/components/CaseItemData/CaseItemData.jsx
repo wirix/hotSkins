@@ -75,7 +75,14 @@ const CaseItemData = () => {
           {
             !isVisibleImg
               ? <div className={'case-form'}><img src={caseData.imageUrl} alt='' /></div>
-              : <CompletedSkin imageUrl={skinItem.imageUrl} />
+              : <CompletedSkin 
+                  imageUrl={skinItem.imageUrl} 
+                  skinTitle={skinItem.skinTitle} 
+                  type={skinItem.type}
+                  color={skinItem.color}
+                  price={skinItem.price}
+                  StatTrak={skinItem.StatTrak}
+                  property={skinItem.property} />
           }
 
         </div>

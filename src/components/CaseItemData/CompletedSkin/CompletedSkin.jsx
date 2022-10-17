@@ -1,10 +1,13 @@
 import React from 'react'
 import './CompletedSkin.scss'
 
-const CompletedSkin = ({ imageUrl }) => {
+const CompletedSkin = ({ type, price, StatTrak, property, color, imageUrl, skinTitle }) => {
   return (
     <div className={'completedSkin'}>
       <img src={imageUrl} alt="" />
+      <div>{type} | {skinTitle}</div>
+      <div>{property}</div>
+      <div>{price} ₽</div>
     </div>
   )
 }

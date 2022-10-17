@@ -24,6 +24,7 @@ export const registerWithEmailAndPassword = async (name, email, password) => {
       name,
       authProvider: "local",
       email,
+      balance: 0,
     });
   } catch (err) {
     return err.code

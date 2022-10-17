@@ -3,7 +3,7 @@ import './SignIn.scss'
 import login from '../../assets/img/login.png'
 import {Formik} from 'formik'
 import { funSignInWithEmailAndPassword } from '../../firebase'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import GetAuth from '../../utils/GetAuth'
 import * as Yup from 'yup';
 
@@ -79,9 +79,14 @@ const SighIn = () => {
                 </div>
                 
                 {reasonsError && 
-                <div className={'error'}><i className="ri-error-warning-line"></i> {reasonsError}</div>}
+                  <div className={`error ${reasonsError && 'error-two'}`}>
+                  <div>
+                    <i className="ri-error-warning-line"></i> {reasonsError}
+                  </div>
+                  <div><Link to='/login'>Регистрация</Link></div>
+                </div>}
 
-                <button className={`btn ${reasonsError && errors.password && 'btn-mb'}`} disabled={errors.email || errors.password} onSubmit={handleSubmit}>Войти</button>
+                <button className={`btn ${reasonsError && 'btn-mb'} ${errors.password && 'btn-mb2'}`} disabled={errors.email || errors.password} onSubmit={handleSubmit}>Войти</button>
 
               </form>
             )}
