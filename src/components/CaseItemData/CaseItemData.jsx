@@ -6,8 +6,19 @@ import { fetchDataCase } from '../../redux/slices/caseDataSlice'
 import GetAuth from '../../utils/GetAuth'
 import loadingIcon from '../../assets/img/loading.svg'
 import CompletedSkin from './CompletedSkin/CompletedSkin'
+// import { getDatabase, ref, onValue } from "firebase/database";
+// import firebase from 'firebase/compat/app';
+// import 'firebase/compat/auth';
+// import 'firebase/compat/database';
 
 const CaseItemData = () => {
+
+
+  
+
+
+
+
   const params = useParams()
   const dispatch = useDispatch()
   const isAuth = GetAuth()
@@ -44,8 +55,10 @@ const CaseItemData = () => {
   const openCase = () => {
     // мб использовать let и перекинуть объектом все в databse firestore
     const item = randomRareItem()
+    const indexSkinItems = caseData.skins[item].skinItems.length - 1
+
     let dataSkinData = caseData.skins[item]
-    let fullDataSkinData = caseData.skins[item].skinItems[Math.round(Math.random() * 4)]
+    let fullDataSkinData = caseData.skins[item].skinItems[Math.round(Math.random() * indexSkinItems)]
 
     const skinItem = {
       skinId: dataSkinData.skinId,
