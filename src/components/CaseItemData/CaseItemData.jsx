@@ -6,19 +6,8 @@ import { fetchDataCase } from '../../redux/slices/caseDataSlice'
 import GetAuth from '../../utils/GetAuth'
 import loadingIcon from '../../assets/img/loading.svg'
 import CompletedSkin from './CompletedSkin/CompletedSkin'
-// import { getDatabase, ref, onValue } from "firebase/database";
-// import firebase from 'firebase/compat/app';
-// import 'firebase/compat/auth';
-// import 'firebase/compat/database';
 
 const CaseItemData = () => {
-
-
-  
-
-
-
-
   const params = useParams()
   const dispatch = useDispatch()
   const isAuth = GetAuth()
@@ -74,7 +63,6 @@ const CaseItemData = () => {
     setSkinItem(skinItem)
   }
 
-
   if (loading || caseData.length === 0) {
     return <img src={loadingIcon} className={'loading'} alt='' />
   }
@@ -88,14 +76,14 @@ const CaseItemData = () => {
           {
             !isVisibleImg
               ? <div className={'case-form'}><img src={caseData.imageUrl} alt='' /></div>
-              : <CompletedSkin 
-                  imageUrl={skinItem.imageUrl} 
-                  skinTitle={skinItem.skinTitle} 
-                  type={skinItem.type}
-                  color={skinItem.color}
-                  price={skinItem.price}
-                  StatTrak={skinItem.StatTrak}
-                  property={skinItem.property} />
+              : <CompletedSkin
+                imageUrl={skinItem.imageUrl}
+                skinTitle={skinItem.skinTitle}
+                type={skinItem.type}
+                color={skinItem.color}
+                price={skinItem.price}
+                StatTrak={skinItem.StatTrak}
+                property={skinItem.property} />
           }
 
         </div>
