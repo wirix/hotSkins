@@ -8,11 +8,13 @@ import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux'
-import { setEmail } from './redux/slices/loginSlice';
 import { useEffect } from 'react';
 import Profile from './components/Profile/Profile';
 import { useAuthState } from "react-firebase-hooks/auth";
 import CaseItemData from './components/CaseItemData/CaseItemData';
+import { getDatabase, ref, onValue } from "firebase/database";
+import { onAuthStateChanged } from "firebase/auth";
+import { setDataAccount } from './redux/slices/loginSlice';
 
 const App = () => {
   const [isAuth, loading] = useAuthState(auth);
@@ -21,7 +23,19 @@ const App = () => {
   // оборачиваю в useEffect тк появляется ошибка об одновремнном рендере двух компонент
   useEffect(() => {
     if (auth.currentUser) {
-      dispatch(setEmail())
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const uid = user.uid
+          const database = getDatabase();
+          const balance = ref(database, 'users/' + uid)
+          onValue(balance, (snapshot) => {
+            const data = snapshot.val();
+            dispatch(setDataAccount(data))
+          });
+        } else {
+          console.log('нет')
+        }
+      });
     }
   }, [isAuth, dispatch])
 

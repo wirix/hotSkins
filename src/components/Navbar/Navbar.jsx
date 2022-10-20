@@ -6,11 +6,14 @@ import { useEffect } from 'react'
 import { useRef } from 'react'
 import { logout } from '../../firebase'
 import GetAuth from '../../utils/GetAuth'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
   const [isNavbar, setIsNavbar] = useState(false)
   const iconRef = useRef(null)
   const isAuth = GetAuth()
+
+  const { username, balance } = useSelector(state => state.login)
 
   // при клике на любую другую область, меню закрывается
   useEffect(() => {
@@ -51,13 +54,20 @@ const Navbar = () => {
         </div>
         <div className={'info'}>
           <Link to={'/home'}>Кейсы</Link>
+          <Link to={'/home'}>Монетка</Link>
         </div>
         {isAuth &&
           <div className={'account'}>
-            <Link to='/profile'>
-              <img src={userPhoto} alt="" />
-              {/* <div className={'email'}>{email.split('@')[0]}</div> */}
-            </Link>
+            <div className='account-container'>
+              <Link to='/profile'>
+                <img src={userPhoto} alt="" />
+              </Link>
+              <div className={'account-info'}>
+                <div className={'account-info-username'}>{username}</div>
+                <div className={'account-info-balance'}>Баланс: {balance}<span>руб</span></div>
+              </div>
+            </div>
+            
             <i onClick={() => logout()} className="ri-logout-box-line"></i>
           </div>}
         {isAuth ? null : <Link to={'/signin'} className={'btn'}>Войти</Link>}

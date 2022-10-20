@@ -6,6 +6,7 @@ import { fetchDataCase } from '../../redux/slices/caseDataSlice'
 import GetAuth from '../../utils/GetAuth'
 import loadingIcon from '../../assets/img/loading.svg'
 import CompletedSkin from './CompletedSkin/CompletedSkin'
+import { writeUserData } from '../../firebase'
 
 const CaseItemData = () => {
   const params = useParams()
@@ -19,33 +20,48 @@ const CaseItemData = () => {
   }, [dispatch, id])
 
   const { caseData, loading } = useSelector((state) => state.caseData)
+  const { balance, uid, username, email } = useSelector((state) => state.login)
 
   const [skinItem, setSkinItem] = useState(null)
   const [isVisibleImg, setIsVisibleImg] = useState(false)
+  const [warning, setWarning] = useState(true)
+  const [dropItem, setDropItem] = useState(false)
+  const [dropPrice, setDropPrice] = useState(0)
 
-  // Расчитывание шанса на айтем и какой редкости выпадет
+  // Расчитывание шанса на редкость айтема
   const randomRareItem = () => {
     const random = Math.random()
     const randomItem = Math.round(Math.random() * 4)
 
-    if (random <= 0.0021) {
+    if (random <= 0.0026) {
       return 20 + randomItem
-    } else if (0.0021 < random && random <= 0.0085) {
+    } else if (0.0026 < random && random <= 0.009) {
       return 15 + randomItem
-    } else if (0.0085 < random && random <= 0.0405) {
+    } else if (0.009 < random && random <= 0.041) {
       return 10 + randomItem
-    } else if (0.0405 < random && random <= 0.2003) {
+    } else if (0.041 < random && random <= 0.2053) {
       return 5 + randomItem
     } else {
       return randomItem
     }
   }
 
+  // Продаем айтем
+  const sellItem = (price) => {
+    let userUpdateData = {
+      uid,
+      username,
+      email,
+      balance: Math.round(balance + price)
+    }
+    writeUserData(userUpdateData)
+    setDropItem(false)
+  }
+
   const openCase = () => {
     // мб использовать let и перекинуть объектом все в databse firestore
     const item = randomRareItem()
     const indexSkinItems = caseData.skins[item].skinItems.length - 1
-
     let dataSkinData = caseData.skins[item]
     let fullDataSkinData = caseData.skins[item].skinItems[Math.round(Math.random() * indexSkinItems)]
 
@@ -59,8 +75,22 @@ const CaseItemData = () => {
       StatTrak: fullDataSkinData.StatTrak,
       property: fullDataSkinData.property,
     }
+    let userUpdatData = {
+      uid,
+      username,
+      email,
+      balance: balance - caseData.price
+    }
     setIsVisibleImg(true)
-    setSkinItem(skinItem)
+    // Если баланс больше 0 то обновляем данные пользователя и показываем дроп иначе пополнить баланс
+    if (balance - caseData.price >= 0) {
+      writeUserData(userUpdatData)
+      setSkinItem(skinItem)
+      setDropPrice(skinItem.price)
+      setDropItem(true)
+    } else {
+      setWarning(false)
+    }
   }
 
   if (loading || caseData.length === 0) {
@@ -88,8 +118,10 @@ const CaseItemData = () => {
 
         </div>
         <div className={'open-btn'}>
-          {isAuth ? <button className={'btn'} onClick={openCase}>Открыть за {caseData.price}₽</button>
-            : <Link className={'btn'} to='/signin'>Войти,  чтобы открыть</Link>}
+          {isAuth && warning && !dropItem && <button className={'btn'} onClick={openCase}>Открыть за {caseData.price}₽</button>}
+          {isAuth && dropItem && <button className={'btn'} onClick={() => sellItem(dropPrice)}>Продать за {dropPrice}₽</button>}
+          {!isAuth && <Link className={'btn'} to='/signin'>Войти, чтобы открыть</Link>}
+          {!warning && <button className={'btn'}>Пополнить баланс</button>}
         </div>
       </div>
       <div className={'container container-transparent container-black'}>

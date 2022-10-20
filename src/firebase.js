@@ -1,10 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 import 'firebase/compat/auth';
 import 'firebase/compat/database';
 import 'firebase/compat/firestore';
-import { getDatabase, ref, onValue } from "firebase/database";
 import firebase from 'firebase/compat/app'
 
 const firebaseConfig = {
@@ -21,43 +20,21 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    const uid = user.uid
-    const database = getDatabase();
-    const balance = ref(database, 'users/' + uid)
-    onValue(balance, (snapshot) => {
-      const data = snapshot.val();
-      console.log(data)
-    });
-  } else {
-    console.log('нет')
-  }
-});
-
-function writeUserData(user) {
+export const writeUserData = (user) => {
   firebase.database().ref('users/' + user.uid).set(user).catch(error => {
-      console.log(error.message)
+    console.log(error.message)
   });
 }
 
-export const registerWithEmailAndPassword = async (name, email, password) => {
+export const registerWithEmailAndPassword = async (username, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    await addDoc(collection(db, "users"), {
-      uid: user.uid,
-      name,
-      authProvider: "local",
-      email,
-      balance: 0,
-    });
     let userData = {
       uid: user.uid,
-      name,
-      authProvider: "local",
+      username,
       email,
-      balance: 0,
+      balance: 10000,
     }
     writeUserData(userData)
   } catch (err) {
