@@ -5,7 +5,7 @@ const CompletedSkin = ({ type, price, StatTrak, property, color, imageUrl, skinT
   return (
     <div className={'completedSkin'}>
       <img src={imageUrl} alt="" />
-      <div>{type} | {skinTitle}</div>
+      <div>{type} | {skinTitle} {StatTrak && 'статтрек'}</div>
       <div>{property}</div>
       <div>{price} ₽</div>
     </div>

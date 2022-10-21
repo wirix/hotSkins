@@ -15,6 +15,7 @@ const CaseItemData = () => {
   const id = params.id
 
   let clientWidth = document.body.clientWidth
+  const random = Math.random()
 
   const { caseData, loading } = useSelector((state) => state.caseData)
   const { balance, uid, username, email } = useSelector((state) => state.login)
@@ -24,7 +25,7 @@ const CaseItemData = () => {
   const [warning, setWarning] = useState(false)
   const [dropItem, setDropItem] = useState(false)
   const [dropPrice, setDropPrice] = useState(0)
-  
+
   // загрузка подробностей кейса
   useEffect(() => {
     dispatch(fetchDataCase({ id }))
@@ -37,10 +38,9 @@ const CaseItemData = () => {
       setWarning(false)
     }
   }, [balance, caseData.price])
-  
+
   // Расчитывание шанса на редкость айтема
   const randomRareItem = () => {
-    const random = Math.random()
     const quantitySingleRareSkins = caseData.skins.length / 5 - 1
     const randomItem = Math.round(Math.random() * quantitySingleRareSkins)
     if (random <= 0.0026) {
@@ -72,10 +72,20 @@ const CaseItemData = () => {
   const openCase = () => {
     // Если баланс больше 0 то отрыть кейс и показываем дроп иначе пополнить баланс
     if (balance - caseData.price >= 0) {
+
       const item = randomRareItem()
-      const indexSkinItems = caseData.skins[item].skinItems.length - 1
+      const indexSkinItems = caseData.skins[item].skinItems.length / 2 - 1
       let dataSkinData = caseData.skins[item]
-      let fullDataSkinData = caseData.skins[item].skinItems[Math.round(Math.random() * indexSkinItems)]
+
+      const setStatTrak = () => {
+        if (Math.random() <= 0.1) {
+          return indexSkinItems + 1
+        } else {
+          return 0
+        }
+      }
+
+      let fullDataSkinData = dataSkinData.skinItems[Math.round(Math.random() * indexSkinItems) + setStatTrak()]
 
       const skinItem = {
         skinId: dataSkinData.skinId,
@@ -102,7 +112,7 @@ const CaseItemData = () => {
       setWarning(true)
     }
   }
-  
+
   // Ставим троеточие для названия скина если ширина пользователя меньше 415px
   const adaptiveWord = (word, maxLength) => {
     if (String(word).length > maxLength && word) {
@@ -111,7 +121,37 @@ const CaseItemData = () => {
       return String(word)
     }
   }
-  
+
+  const listRandomSkinCarousel = () => {
+    let fullObjSkins = []
+    // массив случайных скинов
+    for (let i = 0; i < caseData.skins.length * 2; i++) {
+      let random = Math.random()
+      let randomCaseData = caseData.skins[Math.round(random * (caseData.skins.length - 1))]
+      let skin = {
+        title: randomCaseData.skinTitle,
+        imageUrl: randomCaseData.skinItems[0].image,
+        color: randomCaseData.color
+      }
+      fullObjSkins.push(skin)
+    }
+
+    return (
+      <div className={'carousel'}>
+        {
+          fullObjSkins.map((obj, i) => (
+            <div key={i} className={`carousel-item ${obj.color}`}>
+              <div className={'carousel-item-img'}>
+                <div><img src={obj.imageUrl} alt="" /></div>
+                <div className={'carousel-item-title'}>{obj.title}</div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    )
+  }
+
 
   if (loading || caseData.length === 0) {
     return <img src={loadingIcon} className={'loading'} alt='' />
@@ -124,6 +164,9 @@ const CaseItemData = () => {
           <h1>{caseData.title}</h1>
           {/* при покупке закрывается див с имг и открывается карусель */}
           {
+            isVisibleImg && listRandomSkinCarousel()
+          }
+          {
             !isVisibleImg
               ? <div className={'case-form'}><img src={caseData.imageUrl} alt='' /></div>
               : <CompletedSkin
@@ -135,7 +178,6 @@ const CaseItemData = () => {
                 StatTrak={skinItem.StatTrak}
                 property={skinItem.property} />
           }
-
         </div>
         <div className={'open-btn'}>
           {isAuth && !warning && !dropItem && <button className={'btn'} onClick={openCase}>Открыть за {caseData.price}₽</button>}
