@@ -2,30 +2,31 @@ import React, { useState } from 'react'
 import './Navbar.scss'
 import { Link } from 'react-router-dom'
 import userPhoto from '../../assets/img/userPhoto.png'
-import { useEffect } from 'react'
 import { useRef } from 'react'
 import { logout } from '../../firebase'
 import GetAuth from '../../utils/GetAuth'
 import { useSelector } from 'react-redux'
 
 const Navbar = () => {
-  const [isNavbar, setIsNavbar] = useState(false)
   const iconRef = useRef(null)
   const isAuth = GetAuth()
 
   const { username, balance } = useSelector(state => state.login)
 
-  // при клике на любую другую область, меню закрывается
-  useEffect(() => {
-    const handleEventClick = (e) => {
-      if (!e.path.includes(iconRef.current)) {
-        setIsNavbar(false)
-      }
-    }
-    document.body.addEventListener('click', handleEventClick)
+  const [isNavbar, setIsNavbar] = useState(false)
 
-    return () => document.body.removeEventListener('click', handleEventClick)
-  }, [])
+  const linkLogout = () => {
+    setIsNavbar(false)
+    logout()
+  }
+
+  // Если большой баланс, ставим троеточие
+  let correctBalance
+  if (String(balance).length > 6 && balance) {
+    correctBalance = String(balance).slice(0, 6) + '...'
+  } else {
+    correctBalance = String(balance)
+  }
 
   return (
     <div className={'container'}>
@@ -33,14 +34,23 @@ const Navbar = () => {
         <div className={`navbar-mobile ${isNavbar ? 'navbar-mobile-open' : 'navbar-mobile-close'}`}>
           <div className={'container container-transparent'}>
             <div className={'link'}>
-              <Link to='/home' className={'link-item'}>
+              <Link to='/profile' className={'link-item'} onClick={() => setIsNavbar(false)}>
+                Профиль
+              </Link>
+              <Link to='/home' className={'link-item'} onClick={() => setIsNavbar(false)}>
                 Кейсы
               </Link>
-              <Link to='/' className={'link-item'}>
+              <Link to='/' className={'link-item'} onClick={() => setIsNavbar(false)}>
+                Монетка
+              </Link>
+              <Link to='/' className={'link-item'} onClick={() => setIsNavbar(false)}>
                 Помощь
               </Link>
-              <Link to='/' className={'link-item'}>
+              <Link to='/' className={'link-item'} onClick={() => setIsNavbar(false)}>
                 Контакты
+              </Link>
+              <Link onClick={linkLogout} to='/' className={'link-item'}>
+                Выйти
               </Link>
             </div>
           </div>
@@ -58,13 +68,18 @@ const Navbar = () => {
         </div>
         {isAuth &&
           <div className={'account'}>
-            <div className='account-container'>
-              <Link to='/profile'>
+            <div className={'account-container'} style={{ width: correctBalance.length < 6 && '100%'}}>
+              <Link className={'account-photo'} to='/profile'>
                 <img src={userPhoto} alt="" />
               </Link>
               <div className={'account-info'}>
-                <div className={'account-info-username'}>{username}</div>
-                <div className={'account-info-balance'}>Баланс: {balance}<span>руб</span></div>
+                <Link className={'account-info-username'} to='/profile'>{username}</Link>
+                <div className={'account-info-balance'} style={{ width: correctBalance.length < 6 && '120px' }}>
+                  Баланс: 
+                  <span style={{ fontSize: correctBalance.length >= 7 && '13px'}}>
+                     {correctBalance}руб
+                  </span>
+                </div>
               </div>
             </div>
             

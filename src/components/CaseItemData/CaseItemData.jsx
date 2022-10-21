@@ -14,25 +14,35 @@ const CaseItemData = () => {
   const isAuth = GetAuth()
   const id = params.id
 
-  // загрузка подробностей кейса
-  useEffect(() => {
-    dispatch(fetchDataCase({ id }))
-  }, [dispatch, id])
+  let clientWidth = document.body.clientWidth
 
   const { caseData, loading } = useSelector((state) => state.caseData)
   const { balance, uid, username, email } = useSelector((state) => state.login)
 
   const [skinItem, setSkinItem] = useState(null)
   const [isVisibleImg, setIsVisibleImg] = useState(false)
-  const [warning, setWarning] = useState(true)
+  const [warning, setWarning] = useState(false)
   const [dropItem, setDropItem] = useState(false)
   const [dropPrice, setDropPrice] = useState(0)
+  
+  // загрузка подробностей кейса
+  useEffect(() => {
+    dispatch(fetchDataCase({ id }))
+  }, [dispatch, id])
 
+  useEffect(() => {
+    if (balance - caseData.price <= 0) {
+      setWarning(true)
+    } else {
+      setWarning(false)
+    }
+  }, [balance, caseData.price])
+  
   // Расчитывание шанса на редкость айтема
   const randomRareItem = () => {
     const random = Math.random()
-    const randomItem = Math.round(Math.random() * 4)
-
+    const quantitySingleRareSkins = caseData.skins.length / 5 - 1
+    const randomItem = Math.round(Math.random() * quantitySingleRareSkins)
     if (random <= 0.0026) {
       return 20 + randomItem
     } else if (0.0026 < random && random <= 0.009) {
@@ -55,43 +65,53 @@ const CaseItemData = () => {
       balance: Math.round(balance + price)
     }
     writeUserData(userUpdateData)
+    setIsVisibleImg(false)
     setDropItem(false)
   }
 
   const openCase = () => {
-    // мб использовать let и перекинуть объектом все в databse firestore
-    const item = randomRareItem()
-    const indexSkinItems = caseData.skins[item].skinItems.length - 1
-    let dataSkinData = caseData.skins[item]
-    let fullDataSkinData = caseData.skins[item].skinItems[Math.round(Math.random() * indexSkinItems)]
-
-    const skinItem = {
-      skinId: dataSkinData.skinId,
-      skinTitle: dataSkinData.skinTitle,
-      type: dataSkinData.type,
-      color: dataSkinData.color,
-      imageUrl: fullDataSkinData.image,
-      price: fullDataSkinData.price,
-      StatTrak: fullDataSkinData.StatTrak,
-      property: fullDataSkinData.property,
-    }
-    let userUpdatData = {
-      uid,
-      username,
-      email,
-      balance: balance - caseData.price
-    }
-    setIsVisibleImg(true)
-    // Если баланс больше 0 то обновляем данные пользователя и показываем дроп иначе пополнить баланс
+    // Если баланс больше 0 то отрыть кейс и показываем дроп иначе пополнить баланс
     if (balance - caseData.price >= 0) {
+      const item = randomRareItem()
+      const indexSkinItems = caseData.skins[item].skinItems.length - 1
+      let dataSkinData = caseData.skins[item]
+      let fullDataSkinData = caseData.skins[item].skinItems[Math.round(Math.random() * indexSkinItems)]
+
+      const skinItem = {
+        skinId: dataSkinData.skinId,
+        skinTitle: dataSkinData.skinTitle,
+        type: dataSkinData.type,
+        color: dataSkinData.color,
+        imageUrl: fullDataSkinData.image,
+        price: fullDataSkinData.price,
+        StatTrak: fullDataSkinData.StatTrak,
+        property: fullDataSkinData.property,
+      }
+      let userUpdatData = {
+        uid,
+        username,
+        email,
+        balance: balance - caseData.price
+      }
+      setIsVisibleImg(true)
       writeUserData(userUpdatData)
       setSkinItem(skinItem)
       setDropPrice(skinItem.price)
       setDropItem(true)
     } else {
-      setWarning(false)
+      setWarning(true)
     }
   }
+  
+  // Ставим троеточие для названия скина если ширина пользователя меньше 415px
+  const adaptiveWord = (word, maxLength) => {
+    if (String(word).length > maxLength && word) {
+      return String(word).slice(0, maxLength) + '...'
+    } else {
+      return String(word)
+    }
+  }
+  
 
   if (loading || caseData.length === 0) {
     return <img src={loadingIcon} className={'loading'} alt='' />
@@ -118,10 +138,10 @@ const CaseItemData = () => {
 
         </div>
         <div className={'open-btn'}>
-          {isAuth && warning && !dropItem && <button className={'btn'} onClick={openCase}>Открыть за {caseData.price}₽</button>}
+          {isAuth && !warning && !dropItem && <button className={'btn'} onClick={openCase}>Открыть за {caseData.price}₽</button>}
           {isAuth && dropItem && <button className={'btn'} onClick={() => sellItem(dropPrice)}>Продать за {dropPrice}₽</button>}
           {!isAuth && <Link className={'btn'} to='/signin'>Войти, чтобы открыть</Link>}
-          {!warning && <button className={'btn'}>Пополнить баланс</button>}
+          {warning && !dropItem && <button className={'btn'}>Пополнить баланс</button>}
         </div>
       </div>
       <div className={'container container-transparent container-black'}>
@@ -131,7 +151,9 @@ const CaseItemData = () => {
             caseData.skins.map(skin => (
               <div key={skin.skinId} className={`skin ${skin.color}`}>
                 <img src={skin.skinItems[0].image} alt='' />
-                <div className={'skin-title'}>{skin.skinTitle}</div>
+                <div className={'skin-title'}>
+                  {clientWidth > 415 ? skin.skinTitle : adaptiveWord(skin.skinTitle, 14)}
+                </div>
                 <div className={'skin-type'}>{skin.type}</div>
               </div>
             ))}

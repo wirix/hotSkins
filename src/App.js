@@ -23,6 +23,7 @@ const App = () => {
   // оборачиваю в useEffect тк появляется ошибка об одновремнном рендере двух компонент
   useEffect(() => {
     if (auth.currentUser) {
+      // загрузка в redux данных профиля
       onAuthStateChanged(auth, (user) => {
         if (user) {
           const uid = user.uid

@@ -67,6 +67,13 @@ h2 {
       left: 15px;
       z-index: 10;
     }
+
+    @media (max-width: 415px) {
+      img {
+        width: 120px;
+        height: 90px;
+      }
+    }
   }
 
   .Mil-Spec-Grade {

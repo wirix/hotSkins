@@ -10,11 +10,6 @@ const Home = () => {
   const dispatch = useDispatch()
   const { cases, loading } = useSelector((state) => state.cases)
 
-  // const fetchDataCase = async () => {
-  //   let response = await axios.get(`https://634a618a5df952851410556e.mockapi.io/cases?id=2`)
-  //   console.log(response.data)
-  // }
-
   // загрузка кейсов
   useEffect(() => {
     if (cases.length === 0) {
