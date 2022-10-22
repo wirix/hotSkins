@@ -5,7 +5,7 @@ export const fetchDataCase = createAsyncThunk(
   'case/fetchDataCase',
   async (params) => {
     let {id} = params
-    const { data } = await axios.get(`https://634a618a5df952851410556e.mockapi.io/cases?id=${id}`)
+    const { data } = await axios.get(`https://634a618a5df952851410556e.mockapi.io/cases${id === '1' ? '' : id}?id=${id}`)
     return data
   }
 )

@@ -7,8 +7,15 @@ import GetAuth from '../../utils/GetAuth'
 import loadingIcon from '../../assets/img/loading.svg'
 import CompletedSkin from './CompletedSkin/CompletedSkin'
 import { writeUserData } from '../../firebase'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 const CaseItemData = () => {
+  const [isNext, setIsNext] = useState(true);
+  const onNext = () => setIsNext(true);
+  const onPrevious = () => setIsNext(false);
+
+
+
   const params = useParams()
   const dispatch = useDispatch()
   const isAuth = GetAuth()
@@ -137,21 +144,26 @@ const CaseItemData = () => {
     }
 
     return (
-      <div className={'carousel'}>
-        {
-          fullObjSkins.map((obj, i) => (
-            <div key={i} className={`carousel-item ${obj.color}`}>
-              <div className={'carousel-item-img'}>
-                <div><img src={obj.imageUrl} alt="" /></div>
-                <div className={'carousel-item-title'}>{obj.title}</div>
+      <TransitionGroup childFactory={child => React.cloneElement(child, { classNames: isNext ? "right-to-left" : "left-to-right", timeout: 3000 })}>
+        <div className={'carousel'}>
+          {fullObjSkins.map((obj, i) => (
+            <CSSTransition key={i} classNames="right-to-left" timeout={1000}>
+              <div
+                className={`carousel-item ${obj.color}`} 
+                style={{
+                  transform: `translateX(-${122 * (caseData.skins.length - 3) * 2}px)`
+                    }}>
+                <div className={'carousel-item-img'}>
+                  <div><img src={obj.imageUrl} alt="" /></div>
+                  <div className={'carousel-item-title'}>{obj.title}</div>
+                </div>
               </div>
-            </div>
-          ))
-        }
-      </div>
+            </CSSTransition>
+          ))}
+        </div>
+     </TransitionGroup>
     )
   }
-
 
   if (loading || caseData.length === 0) {
     return <img src={loadingIcon} className={'loading'} alt='' />
@@ -162,10 +174,7 @@ const CaseItemData = () => {
       <div className={'container container-transparent'}>
         <div className={'info'}>
           <h1>{caseData.title}</h1>
-          {/* при покупке закрывается див с имг и открывается карусель */}
-          {
-            isVisibleImg && listRandomSkinCarousel()
-          }
+            {isVisibleImg && listRandomSkinCarousel()}
           {
             !isVisibleImg
               ? <div className={'case-form'}><img src={caseData.imageUrl} alt='' /></div>

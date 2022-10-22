@@ -103,6 +103,9 @@ h2 {
 }
 
 .carousel {
+  // position: absolute;
+  // left: 0;
+  // right: 0;
   display: flex;
   flex-direction: row;
   border: 3px solid #F4C038;
@@ -136,4 +139,40 @@ h2 {
       opacity: .8;
     }
   }
+}
+
+.right-to-left-enter {
+  transform: translateX(100%);
+}
+
+.right-to-left-enter-active {
+  transform: translateX(0);
+  transition: all 1s ease;
+}
+
+.right-to-left-exit {
+  transform: translateX(0);
+}
+
+.right-to-left-exit-active {
+  transform: translateX(-100%);
+  transition: all 1s ease;
+}
+
+.left-to-right-enter {
+  transform: translateX(-100%);
+}
+
+.left-to-right-enter-active {
+  transform: translateX(0);
+  transition: all 1s ease;
+}
+
+.left-to-right-exit {
+  transform: translateX(0);
+}
+
+.left-to-right-exit-active {
+  transform: translateX(100%);
+  transition: all 1s ease;
 }
