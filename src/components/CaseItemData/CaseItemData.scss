@@ -18,17 +18,13 @@
   .case-form {
     display: flex;
     justify-content: center;
-
+    
     img {
       width: 250px;
       height: 250px;
+      margin-bottom: 10px;
     }
   }
-}
-
-.open-btn {
-  display: flex;
-  justify-content: center;
 }
 
 h2 {

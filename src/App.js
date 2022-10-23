@@ -33,8 +33,6 @@ const App = () => {
             const data = snapshot.val();
             dispatch(setDataAccount(data))
           });
-        } else {
-          console.log('нет')
         }
       });
     }

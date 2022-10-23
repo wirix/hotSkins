@@ -14,7 +14,7 @@ const Carousel = ({ fullObjSkins, skinsLength }) => {
           }}>
           <div className={'carousel-item-img'}>
             <div><img src={obj.imageUrl} alt="" /></div>
-            <div className={'carousel-item-title'}>{obj.title}</div>
+            <div className={'carousel-item-title'}>{obj.skinTitle}</div>
           </div>
         </div>
       ))}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './CaseItemData.scss'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchDataCase } from '../../redux/slices/caseDataSlice'
 import GetAuth from '../../utils/GetAuth'
@@ -8,6 +8,7 @@ import loadingIcon from '../../assets/img/loading.svg'
 import CompletedSkin from './CompletedSkin/CompletedSkin'
 import { writeUserData } from '../../firebase'
 import Carousel from './Carousel/Carousel'
+import ControlBtn from './ControlBtn/ControlBtn'
 
 const CaseItemData = () => {
   const params = useParams()
@@ -23,7 +24,7 @@ const CaseItemData = () => {
 
   const [isCarousel, setIsCarousel] = useState(false);
   const [skinItem, setSkinItem] = useState(null)
-  const [warning, setWarning] = useState(false)
+  const [allowBuy, setAllowBuy] = useState(false)
   const [dropItem, setDropItem] = useState(false)
   const [dropPrice, setDropPrice] = useState(0)
   const [duringCarousel, setDuringCarousel] = useState(false)
@@ -35,10 +36,10 @@ const CaseItemData = () => {
   }, [dispatch, id])
 
   useEffect(() => {
-    if (balance - caseData.price <= 0) {
-      setWarning(true)
+    if (balance - caseData.price >= 0) {
+      setAllowBuy(true)
     } else {
-      setWarning(false)
+      setAllowBuy(false)
     }
   }, [balance, caseData.price])
 
@@ -74,7 +75,6 @@ const CaseItemData = () => {
   }
 
   const leaveSkinInProfile = () => {
-    // после клика исчезает скин и оказывается в инвентаре
     setLeaveSkin(false)
     setIsCarousel(false)
     setDropItem(false)
@@ -111,6 +111,7 @@ const CaseItemData = () => {
       email,
       balance: balance - caseData.price
     }
+
     setIsCarousel(true)
     writeUserData(userUpdatData)
     setSkinItem(skinItem)
@@ -137,13 +138,18 @@ const CaseItemData = () => {
     // массив случайных скинов
     for (let i = 0; i < caseData.skins.length * 2; i++) {
       let random = Math.random()
-      let randomCaseData = caseData.skins[Math.round(random * (caseData.skins.length - 1))]
-      let skin = {
-        title: randomCaseData.skinTitle,
+      let randomCaseData = caseData.skins[Math.round(random * (caseData.skins.length - 4))]
+      let randomSkins = {
+        skinTitle: randomCaseData.skinTitle,
         imageUrl: randomCaseData.skinItems[0].image,
         color: randomCaseData.color
       }
-      fullObjSkins.push(skin)
+
+      if (i === 46) {
+        fullObjSkins.push(skinItem)
+      } else {
+        fullObjSkins.push(randomSkins)
+      }
     }
 
     return (
@@ -160,10 +166,9 @@ const CaseItemData = () => {
       <div className={'container container-transparent'}>
         <div className={'info'}>
           <h1>{caseData.title}</h1>
-          {isCarousel
-            ? listRandomSkinCarousel()
-            : <div className={'case-form'}><img src={caseData.imageUrl} alt='' /></div>
-          }
+          {isCarousel && !dropItem && listRandomSkinCarousel()}
+          {!isCarousel && <div className={'case-form'}><img src={caseData.imageUrl} alt='' /></div>}
+
           {isCarousel && <CompletedSkin
             imageUrl={skinItem.imageUrl}
             skinTitle={skinItem.skinTitle}
@@ -172,22 +177,18 @@ const CaseItemData = () => {
             price={skinItem.price}
             StatTrak={skinItem.StatTrak}
             property={skinItem.property} />}
-
         </div>
-        <div className={'open-btn'}>
-
-          {isAuth && !warning && !duringCarousel && !leaveSkin && <button className={'btn btn-min-width'} onClick={openCase}>Открыть за {caseData.price}₽</button>}
-
-          {warning && <button className={'btn btn-min-width'}>Пополнить баланс</button>}
-
-          {!isAuth && <Link className={'btn btn-min-width'} to='/signin'>Войти, чтобы открыть</Link>}
-
-          {isAuth && dropItem && leaveSkin && <button onClick={leaveSkinInProfile} className={'btn btn-min-width'}>Оставить</button>}
-
-          {isAuth && dropItem && leaveSkin && <button className={'btn btn-min-width'} onClick={() => sellItem(dropPrice)}>Продать за {dropPrice}₽</button>}
-
-          {isAuth && duringCarousel && !dropItem && <button disabled className={'btn btn-min-width'}>Открывается</button>}
-        </div>
+        <ControlBtn
+          isAuth={isAuth} 
+          allowBuy={allowBuy} 
+          duringCarousel={duringCarousel} 
+          leaveSkin={leaveSkin} 
+          openCase={openCase} 
+          price={caseData.price}
+          dropItem={dropItem}
+          sellItem={sellItem}
+          leaveSkinInProfile={leaveSkinInProfile}
+          dropPrice={dropPrice} />
       </div>
       <div className={'container container-transparent container-black'}>
         <h2>Содержимое кейса</h2>
