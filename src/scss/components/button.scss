@@ -23,6 +23,7 @@
   }
 
   &:disabled {
+    cursor: default;
     background-color: #d3b464;
   }
 
@@ -32,5 +33,10 @@
     @media (max-width: 500px) {
       padding: 14px 24px;
     }
+  }
+
+  &-min-width {
+    min-width: 160px;
+    margin: 0 5px;
   }
 }

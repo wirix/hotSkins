@@ -3,7 +3,7 @@ import './CompletedSkin.scss'
 
 const CompletedSkin = ({ type, price, StatTrak, property, color, imageUrl, skinTitle }) => {
   return (
-    <div className={'completedSkin'}>
+    <div className={'completed-skin'}>
       <img src={imageUrl} alt="" />
       <div>{type} | {skinTitle} {StatTrak && 'статтрек'}</div>
       <div>{property}</div>

@@ -7,15 +7,9 @@ import GetAuth from '../../utils/GetAuth'
 import loadingIcon from '../../assets/img/loading.svg'
 import CompletedSkin from './CompletedSkin/CompletedSkin'
 import { writeUserData } from '../../firebase'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import Carousel from './Carousel/Carousel'
 
 const CaseItemData = () => {
-  const [isNext, setIsNext] = useState(true);
-  const onNext = () => setIsNext(true);
-  const onPrevious = () => setIsNext(false);
-
-
-
   const params = useParams()
   const dispatch = useDispatch()
   const isAuth = GetAuth()
@@ -27,11 +21,13 @@ const CaseItemData = () => {
   const { caseData, loading } = useSelector((state) => state.caseData)
   const { balance, uid, username, email } = useSelector((state) => state.login)
 
+  const [isCarousel, setIsCarousel] = useState(false);
   const [skinItem, setSkinItem] = useState(null)
-  const [isVisibleImg, setIsVisibleImg] = useState(false)
   const [warning, setWarning] = useState(false)
   const [dropItem, setDropItem] = useState(false)
   const [dropPrice, setDropPrice] = useState(0)
+  const [duringCarousel, setDuringCarousel] = useState(false)
+  const [leaveSkin, setLeaveSkin] = useState(false)
 
   // загрузка подробностей кейса
   useEffect(() => {
@@ -72,52 +68,59 @@ const CaseItemData = () => {
       balance: Math.round(balance + price)
     }
     writeUserData(userUpdateData)
-    setIsVisibleImg(false)
+    setIsCarousel(false)
+    setDropItem(false)
+    setLeaveSkin(false)
+  }
+
+  const leaveSkinInProfile = () => {
+    // после клика исчезает скин и оказывается в инвентаре
+    setLeaveSkin(false)
+    setIsCarousel(false)
     setDropItem(false)
   }
 
   const openCase = () => {
-    // Если баланс больше 0 то отрыть кейс и показываем дроп иначе пополнить баланс
-    if (balance - caseData.price >= 0) {
+    const item = randomRareItem()
+    const indexSkinItems = caseData.skins[item].skinItems.length / 2 - 1
+    let dataSkinData = caseData.skins[item]
 
-      const item = randomRareItem()
-      const indexSkinItems = caseData.skins[item].skinItems.length / 2 - 1
-      let dataSkinData = caseData.skins[item]
-
-      const setStatTrak = () => {
-        if (Math.random() <= 0.1) {
-          return indexSkinItems + 1
-        } else {
-          return 0
-        }
+    const setStatTrak = () => {
+      if (Math.random() <= 0.1) {
+        return indexSkinItems + 1
+      } else {
+        return 0
       }
-
-      let fullDataSkinData = dataSkinData.skinItems[Math.round(Math.random() * indexSkinItems) + setStatTrak()]
-
-      const skinItem = {
-        skinId: dataSkinData.skinId,
-        skinTitle: dataSkinData.skinTitle,
-        type: dataSkinData.type,
-        color: dataSkinData.color,
-        imageUrl: fullDataSkinData.image,
-        price: fullDataSkinData.price,
-        StatTrak: fullDataSkinData.StatTrak,
-        property: fullDataSkinData.property,
-      }
-      let userUpdatData = {
-        uid,
-        username,
-        email,
-        balance: balance - caseData.price
-      }
-      setIsVisibleImg(true)
-      writeUserData(userUpdatData)
-      setSkinItem(skinItem)
-      setDropPrice(skinItem.price)
-      setDropItem(true)
-    } else {
-      setWarning(true)
     }
+
+    let fullDataSkinData = dataSkinData.skinItems[Math.round(Math.random() * indexSkinItems) + setStatTrak()]
+
+    const skinItem = {
+      skinId: dataSkinData.skinId,
+      skinTitle: dataSkinData.skinTitle,
+      type: dataSkinData.type,
+      color: dataSkinData.color,
+      imageUrl: fullDataSkinData.image,
+      price: fullDataSkinData.price,
+      StatTrak: fullDataSkinData.StatTrak,
+      property: fullDataSkinData.property,
+    }
+    let userUpdatData = {
+      uid,
+      username,
+      email,
+      balance: balance - caseData.price
+    }
+    setIsCarousel(true)
+    writeUserData(userUpdatData)
+    setSkinItem(skinItem)
+    setDropPrice(skinItem.price)
+    setDuringCarousel(true)
+    setTimeout(() => {
+      setDropItem(true)
+      setDuringCarousel(false)
+      setLeaveSkin(true)
+    }, 15000)
   }
 
   // Ставим троеточие для названия скина если ширина пользователя меньше 415px
@@ -144,24 +147,7 @@ const CaseItemData = () => {
     }
 
     return (
-      <TransitionGroup childFactory={child => React.cloneElement(child, { classNames: isNext ? "right-to-left" : "left-to-right", timeout: 3000 })}>
-        <div className={'carousel'}>
-          {fullObjSkins.map((obj, i) => (
-            <CSSTransition key={i} classNames="right-to-left" timeout={1000}>
-              <div
-                className={`carousel-item ${obj.color}`} 
-                style={{
-                  transform: `translateX(-${122 * (caseData.skins.length - 3) * 2}px)`
-                    }}>
-                <div className={'carousel-item-img'}>
-                  <div><img src={obj.imageUrl} alt="" /></div>
-                  <div className={'carousel-item-title'}>{obj.title}</div>
-                </div>
-              </div>
-            </CSSTransition>
-          ))}
-        </div>
-     </TransitionGroup>
+      <Carousel fullObjSkins={fullObjSkins} skinsLength={caseData.skins.length} /> 
     )
   }
 
@@ -174,25 +160,33 @@ const CaseItemData = () => {
       <div className={'container container-transparent'}>
         <div className={'info'}>
           <h1>{caseData.title}</h1>
-            {isVisibleImg && listRandomSkinCarousel()}
-          {
-            !isVisibleImg
-              ? <div className={'case-form'}><img src={caseData.imageUrl} alt='' /></div>
-              : <CompletedSkin
-                imageUrl={skinItem.imageUrl}
-                skinTitle={skinItem.skinTitle}
-                type={skinItem.type}
-                color={skinItem.color}
-                price={skinItem.price}
-                StatTrak={skinItem.StatTrak}
-                property={skinItem.property} />
+          {isCarousel
+            ? listRandomSkinCarousel()
+            : <div className={'case-form'}><img src={caseData.imageUrl} alt='' /></div>
           }
+          {isCarousel && <CompletedSkin
+            imageUrl={skinItem.imageUrl}
+            skinTitle={skinItem.skinTitle}
+            type={skinItem.type}
+            color={skinItem.color}
+            price={skinItem.price}
+            StatTrak={skinItem.StatTrak}
+            property={skinItem.property} />}
+
         </div>
         <div className={'open-btn'}>
-          {isAuth && !warning && !dropItem && <button className={'btn'} onClick={openCase}>Открыть за {caseData.price}₽</button>}
-          {isAuth && dropItem && <button className={'btn'} onClick={() => sellItem(dropPrice)}>Продать за {dropPrice}₽</button>}
-          {!isAuth && <Link className={'btn'} to='/signin'>Войти, чтобы открыть</Link>}
-          {warning && !dropItem && <button className={'btn'}>Пополнить баланс</button>}
+
+          {isAuth && !warning && !duringCarousel && !leaveSkin && <button className={'btn btn-min-width'} onClick={openCase}>Открыть за {caseData.price}₽</button>}
+
+          {warning && <button className={'btn btn-min-width'}>Пополнить баланс</button>}
+
+          {!isAuth && <Link className={'btn btn-min-width'} to='/signin'>Войти, чтобы открыть</Link>}
+
+          {isAuth && dropItem && leaveSkin && <button onClick={leaveSkinInProfile} className={'btn btn-min-width'}>Оставить</button>}
+
+          {isAuth && dropItem && leaveSkin && <button className={'btn btn-min-width'} onClick={() => sellItem(dropPrice)}>Продать за {dropPrice}₽</button>}
+
+          {isAuth && duringCarousel && !dropItem && <button disabled className={'btn btn-min-width'}>Открывается</button>}
         </div>
       </div>
       <div className={'container container-transparent container-black'}>
