@@ -8,7 +8,7 @@ const Carousel = ({ fullObjSkins, skinsLength }) => {
   return (
     <div className={'carousel'}>
       <div className={'carousel-border'}></div>
-      <div className={'carousel-container'} style={{ transform: `translateX(${Math.round(randomLeft * 50 - randomRight * 50)}px)`}}>
+      <div className={'carousel-container'} style={{ transform: `translateX(${Math.round(randomLeft * 55 - randomRight * 55)}px)`}}>
         {fullObjSkins.map((obj, i) => (
           <div
           key={i}
