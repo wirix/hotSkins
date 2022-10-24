@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   height: 250px;
-  animation: show-completed-skin 15s linear;
+  animation: show-completed-skin 11.5s linear;
   width: 300px;
   margin: 0 auto;
   margin-bottom: 10px;
@@ -39,17 +39,14 @@
 
     &-type {
       span {
+        color: #faa020;
+        text-shadow: -2px 1px 5px #faad41;
         span {
-          color: #faa020;
-
-          span {
-            color: #fff;
-          }
+          color: #fff;
         }
       }
     }
   }
-  
 }
 
 @keyframes show-completed-skin {

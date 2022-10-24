@@ -8,9 +8,7 @@ const CompletedSkin = ({ type, price, StatTrak, property, color, imageUrl, skinT
       <img src={imageUrl} alt="" />
       <div className={'info'}>
         <div className={'info-type'}>
-          <span>
-            {StatTrak && <span>★StatTrak <span> | </span></span> }
-          </span>
+          {StatTrak && <span className={'StatTrak'}>★StatTrak <span> | </span></span> }
           {type} | {skinTitle}
         </div> 
         <div className={'info-property'} >

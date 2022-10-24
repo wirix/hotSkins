@@ -121,7 +121,7 @@ const CaseItemData = () => {
       setDropItem(true)
       setDuringCarousel(false)
       setLeaveSkin(true)
-    }, 15000)
+    }, 12000)
   }
 
   // Ставим троеточие для названия скина если ширина пользователя меньше 415px
@@ -145,7 +145,7 @@ const CaseItemData = () => {
         color: randomCaseData.color
       }
 
-      if (i === 46) {
+      if (i === 43) {
         fullObjSkins.push(skinItem)
       } else {
         fullObjSkins.push(randomSkins)
@@ -168,7 +168,7 @@ const CaseItemData = () => {
           <h1>{caseData.title}</h1>
           {isCarousel && !dropItem && listRandomSkinCarousel()}
           {!isCarousel && <div className={'case-form'}><img src={caseData.imageUrl} alt='' /></div>}
-
+          
           {isCarousel && <CompletedSkin
             imageUrl={skinItem.imageUrl}
             skinTitle={skinItem.skinTitle}
