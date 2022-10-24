@@ -15,6 +15,7 @@ import CaseItemData from './components/CaseItemData/CaseItemData';
 import { getDatabase, ref, onValue } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
 import { setDataAccount } from './redux/slices/loginSlice';
+import Contacts from './components/Contacts/Contacts';
 
 const App = () => {
   const [isAuth, loading] = useAuthState(auth);
@@ -53,6 +54,7 @@ const App = () => {
         <Route path="/signin" element={<SighIn />} />
         <Route path='/login' element={<Login />} />
         <Route path='/cases/:id' element={<CaseItemData />} />
+        <Route path='/contacts' element={<Contacts />} />
       </Routes>
       <Footer />
     </div>

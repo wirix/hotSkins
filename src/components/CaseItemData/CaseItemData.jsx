@@ -118,9 +118,11 @@ const CaseItemData = () => {
     setDropPrice(skinItem.price)
     setDuringCarousel(true)
     setTimeout(() => {
-      setDropItem(true)
-      setDuringCarousel(false)
       setLeaveSkin(true)
+      setDropItem(true)
+    }, 11700)
+    setTimeout(() => {
+      setDuringCarousel(false)
     }, 12000)
   }
 
@@ -136,9 +138,9 @@ const CaseItemData = () => {
   const listRandomSkinCarousel = () => {
     let fullObjSkins = []
     // массив случайных скинов
-    for (let i = 0; i < caseData.skins.length * 2; i++) {
+    for (let i = 0; i < caseData.skins.length * 2 - 2; i++) {
       let random = Math.random()
-      let randomCaseData = caseData.skins[Math.round(random * (caseData.skins.length - 4))]
+      let randomCaseData = caseData.skins[Math.round(random * (caseData.skins.length - 6))]
       let randomSkins = {
         skinTitle: randomCaseData.skinTitle,
         imageUrl: randomCaseData.skinItems[0].image,

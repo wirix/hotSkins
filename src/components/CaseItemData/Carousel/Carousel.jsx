@@ -2,13 +2,12 @@ import React from 'react'
 import './Carousel.scss'
 
 const Carousel = ({ fullObjSkins, skinsLength }) => {
-  let randomLeft = Math.random()
-  let randomRight = Math.random()
-  
+  let randomTranslateX = Math.random() * 55
+
   return (
     <div className={'carousel'}>
       <div className={'carousel-border'}></div>
-      <div className={'carousel-container'} style={{ transform: `translateX(${Math.round(randomLeft * 55 - randomRight * 55)}px)`}}>
+      <div className={'carousel-container'} style={{ transform: `translateX(${Math.random() >= 0.5 ? -randomTranslateX : randomTranslateX}px)`}}>
         {fullObjSkins.map((obj, i) => (
           <div
           key={i}

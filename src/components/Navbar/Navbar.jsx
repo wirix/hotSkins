@@ -34,9 +34,10 @@ const Navbar = () => {
         <div className={`navbar-mobile ${isNavbar ? 'navbar-mobile-open' : 'navbar-mobile-close'}`}>
           <div className={'container container-transparent'}>
             <div className={'link'}>
+              {isAuth && 
               <Link to='/profile' className={'link-item'} onClick={() => setIsNavbar(false)}>
                 Профиль
-              </Link>
+              </Link>}
               <Link to='/home' className={'link-item'} onClick={() => setIsNavbar(false)}>
                 Кейсы
               </Link>
@@ -46,12 +47,16 @@ const Navbar = () => {
               <Link to='/' className={'link-item'} onClick={() => setIsNavbar(false)}>
                 Помощь
               </Link>
-              <Link to='/' className={'link-item'} onClick={() => setIsNavbar(false)}>
+              <Link to='/contacts' className={'link-item'} onClick={() => setIsNavbar(false)}>
                 Контакты
               </Link>
+              {isAuth ? 
               <Link onClick={linkLogout} to='/' className={'link-item'}>
                 Выйти
-              </Link>
+              </Link> : 
+              <Link onClick={linkLogout} to='/signin' className={'link-item'}>
+                Войти
+              </Link>}
             </div>
           </div>
         </div>
