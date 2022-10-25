@@ -82,7 +82,7 @@ const Navbar = () => {
                 <div className={'account-info-balance'} style={{ width: correctBalance.length < 6 && '120px' }}>
                   Баланс: 
                   <span style={{ fontSize: correctBalance.length >= 7 && '13px'}}>
-                     {correctBalance}руб
+                    {correctBalance}₽
                   </span>
                 </div>
               </div>

@@ -26,6 +26,12 @@ export const writeUserData = (user) => {
   });
 }
 
+export const updateBalanceUser = (uid, balance) => {
+  firebase.database().ref('users/' + uid + '/balance').set(balance).catch(error => {
+    console.log(error.message)
+  });
+}
+
 export const registerWithEmailAndPassword = async (username, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -35,6 +41,8 @@ export const registerWithEmailAndPassword = async (username, email, password) =>
       username,
       email,
       balance: 10000,
+      luckyChance: 0,
+      inventory: [1, 2],
     }
     writeUserData(userData)
   } catch (err) {

@@ -6,7 +6,7 @@ import { fetchDataCase } from '../../redux/slices/caseDataSlice'
 import GetAuth from '../../utils/GetAuth'
 import loadingIcon from '../../assets/img/loading.svg'
 import CompletedSkin from './CompletedSkin/CompletedSkin'
-import { writeUserData } from '../../firebase'
+import { updateBalanceUser } from '../../firebase'
 import Carousel from './Carousel/Carousel'
 import ControlBtn from './ControlBtn/ControlBtn'
 
@@ -20,8 +20,8 @@ const CaseItemData = () => {
   const random = Math.random()
 
   const { caseData, loading } = useSelector((state) => state.caseData)
-  const { balance, uid, username, email } = useSelector((state) => state.login)
-
+  const { balance, uid, luckyChance, inventory } = useSelector((state) => state.login)
+  console.log(luckyChance, inventory)
   const [isCarousel, setIsCarousel] = useState(false);
   const [skinItem, setSkinItem] = useState(null)
   const [allowBuy, setAllowBuy] = useState(false)
@@ -47,13 +47,14 @@ const CaseItemData = () => {
   const randomRareItem = () => {
     const quantitySingleRareSkins = caseData.skins.length / 5 - 1
     const randomItem = Math.round(Math.random() * quantitySingleRareSkins)
-    if (random <= 0.0026) {
+    let randomPlusLucky = random - luckyChance
+    if (randomPlusLucky <= 0.0026) {
       return 20 + randomItem
-    } else if (0.0026 < random && random <= 0.009) {
+    } else if (0.0026 < randomPlusLucky && randomPlusLucky <= 0.009) {
       return 15 + randomItem
-    } else if (0.009 < random && random <= 0.041) {
+    } else if (0.009 < randomPlusLucky && randomPlusLucky <= 0.041) {
       return 10 + randomItem
-    } else if (0.041 < random && random <= 0.2053) {
+    } else if (0.041 < randomPlusLucky && randomPlusLucky <= 0.2053) {
       return 5 + randomItem
     } else {
       return randomItem
@@ -62,13 +63,7 @@ const CaseItemData = () => {
 
   // Продаем айтем
   const sellItem = (price) => {
-    let userUpdateData = {
-      uid,
-      username,
-      email,
-      balance: Math.round(balance + price)
-    }
-    writeUserData(userUpdateData)
+    updateBalanceUser(uid, Math.round(balance + price))
     setIsCarousel(false)
     setDropItem(false)
     setLeaveSkin(false)
@@ -105,15 +100,9 @@ const CaseItemData = () => {
       StatTrak: fullDataSkinData.StatTrak,
       property: fullDataSkinData.property,
     }
-    let userUpdatData = {
-      uid,
-      username,
-      email,
-      balance: balance - caseData.price
-    }
 
     setIsCarousel(true)
-    writeUserData(userUpdatData)
+    updateBalanceUser(uid, balance - caseData.price)
     setSkinItem(skinItem)
     setDropPrice(skinItem.price)
     setDuringCarousel(true)

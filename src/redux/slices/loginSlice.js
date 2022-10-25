@@ -5,7 +5,9 @@ const initialState = {
   balance: 0,
   username: '',
   uid: '',
-  isDataProfile: false
+  luckyChance: 0,
+  inventory: [],
+  isDataProfile: false,
 }
 
 export const loginSlice = createSlice({
@@ -17,6 +19,8 @@ export const loginSlice = createSlice({
       state.email = actions.payload.email
       state.balance = actions.payload.balance
       state.uid = actions.payload.uid
+      state.luckyChance = actions.payload.luckyChance
+      state.inventory = actions.payload.inventory
       state.isDataProfile = true
     },
   },
