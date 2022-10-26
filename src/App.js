@@ -21,7 +21,6 @@ const App = () => {
   const [isAuth, loading] = useAuthState(auth);
   const dispatch = useDispatch()
 
-  // оборачиваю в useEffect тк появляется ошибка об одновремнном рендере двух компонент
   useEffect(() => {
     if (auth.currentUser) {
       // загрузка в redux данных профиля
@@ -39,7 +38,6 @@ const App = () => {
     }
   }, [isAuth, dispatch])
 
-  // пока загружаются данные аккаунта идет загрузка
   if (loading) {
     return null
   }

@@ -6,7 +6,7 @@ import { fetchDataCase } from '../../redux/slices/caseDataSlice'
 import GetAuth from '../../utils/GetAuth'
 import loadingIcon from '../../assets/img/loading.svg'
 import CompletedSkin from './CompletedSkin/CompletedSkin'
-import { updateBalanceUser } from '../../firebase'
+import { updateBalanceUser, updateInventoryUser } from '../../firebase'
 import Carousel from './Carousel/Carousel'
 import ControlBtn from './ControlBtn/ControlBtn'
 
@@ -21,7 +21,6 @@ const CaseItemData = () => {
 
   const { caseData, loading } = useSelector((state) => state.caseData)
   const { balance, uid, luckyChance, inventory } = useSelector((state) => state.login)
-  console.log(luckyChance, inventory)
   const [isCarousel, setIsCarousel] = useState(false);
   const [skinItem, setSkinItem] = useState(null)
   const [allowBuy, setAllowBuy] = useState(false)
@@ -69,7 +68,13 @@ const CaseItemData = () => {
     setLeaveSkin(false)
   }
 
-  const leaveSkinInProfile = () => {
+  const leaveSkinInProfile = (item) => {
+    if (!inventory) {
+      updateInventoryUser(uid, [item])
+    } else {
+      let arrayDataItems = [...inventory, item]
+      updateInventoryUser(uid, arrayDataItems)
+    }
     setLeaveSkin(false)
     setIsCarousel(false)
     setDropItem(false)
@@ -160,14 +165,7 @@ const CaseItemData = () => {
           {isCarousel && !dropItem && listRandomSkinCarousel()}
           {!isCarousel && <div className={'case-form'}><img src={caseData.imageUrl} alt='' /></div>}
           
-          {isCarousel && <CompletedSkin
-            imageUrl={skinItem.imageUrl}
-            skinTitle={skinItem.skinTitle}
-            type={skinItem.type}
-            color={skinItem.color}
-            price={skinItem.price}
-            StatTrak={skinItem.StatTrak}
-            property={skinItem.property} />}
+          {isCarousel && <CompletedSkin skinItem={skinItem} />}
         </div>
         <ControlBtn
           isAuth={isAuth} 
@@ -179,7 +177,8 @@ const CaseItemData = () => {
           dropItem={dropItem}
           sellItem={sellItem}
           leaveSkinInProfile={leaveSkinInProfile}
-          dropPrice={dropPrice} />
+          dropPrice={dropPrice}
+          skinItem={skinItem} />
       </div>
       <div className={'container container-transparent container-black'}>
         <h2>Содержимое кейса</h2>

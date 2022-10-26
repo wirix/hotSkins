@@ -7,7 +7,7 @@ export const store = configureStore({
   reducer: {
     login: loginSlice,
     cases: casesSlice,
-    caseData: caseDataSlice
+    caseData: caseDataSlice,
   }
 })
 

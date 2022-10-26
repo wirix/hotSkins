@@ -21,13 +21,19 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 export const writeUserData = (user) => {
-  firebase.database().ref('users/' + user.uid).set(user).catch(error => {
+  firebase.database().ref(`users/${user.uid}`).set(user).catch(error => {
     console.log(error.message)
   });
 }
 
 export const updateBalanceUser = (uid, balance) => {
-  firebase.database().ref('users/' + uid + '/balance').set(balance).catch(error => {
+  firebase.database().ref(`users/${uid}/balance`).set(balance).catch(error => {
+    console.log(error.message)
+  });
+}
+
+export const updateInventoryUser = (uid, inventory) => {
+  firebase.database().ref(`users/${uid}/inventory`).set(inventory).catch(error => {
     console.log(error.message)
   });
 }
@@ -42,7 +48,7 @@ export const registerWithEmailAndPassword = async (username, email, password) =>
       email,
       balance: 10000,
       luckyChance: 0,
-      inventory: [1, 2],
+      inventory: [],
     }
     writeUserData(userData)
   } catch (err) {

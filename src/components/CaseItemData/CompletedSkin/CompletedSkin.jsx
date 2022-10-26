@@ -1,20 +1,20 @@
 import React from 'react'
 import './CompletedSkin.scss'
 
-const CompletedSkin = ({ type, price, StatTrak, property, color, imageUrl, skinTitle }) => {
+const CompletedSkin = ({ skinItem }) => {
   return (
     <div className={`completed-skin`}>
-      <span className={`bg ${color}`}></span>
-      <img src={imageUrl} alt="" />
+      <span className={`bg ${skinItem.color}`}></span>
+      <img src={skinItem.imageUrl} alt="" />
       <div className={'info'}>
         <div className={'info-type'}>
-          {StatTrak && <span className={'StatTrak'}>★StatTrak <span> | </span></span> }
-          {type} | {skinTitle}
+          {skinItem.StatTrak && <span className={'StatTrak'}>★StatTrak <span> | </span></span> }
+          {skinItem.type} | {skinItem.skinTitle}
         </div> 
         <div className={'info-property'} >
-          {property}
+          {skinItem.property}
         </div>
-        <div className={'price'}>{price} ₽</div>
+        <div className={'price'}>{skinItem.price} ₽</div>
       </div>
     </div>
   )

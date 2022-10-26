@@ -22,7 +22,7 @@ const ControlBtn = (props) => {
        props.dropItem &&
         props.leaveSkin &&
          <div className={'two-btns'}>
-          <button onClick={props.leaveSkinInProfile} className={'btn btn-min-width'}>Оставить</button>
+          <button onClick={() => props.leaveSkinInProfile(props.skinItem)} className={'btn btn-min-width'}>Оставить</button>
           <button className={'btn btn-min-width'} onClick={() => props.sellItem(props.dropPrice)}>Продать за {props.dropPrice}₽</button>
         </div>}
 
