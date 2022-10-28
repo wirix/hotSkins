@@ -8,10 +8,10 @@ const CompletedSkin = ({ skinItem }) => {
       <img src={skinItem.imageUrl} alt="" />
       <div className={'info'}>
         <div className={'info-type'}>
-          {skinItem.StatTrak && <span className={'StatTrak'}>★StatTrak <span> | </span></span> }
+          {skinItem.StatTrak && <span className={'StatTrak'}>★StatTrak <span> | </span></span>}
           {skinItem.type} | {skinItem.skinTitle}
-        </div> 
-        <div className={'info-property'} >
+        </div>
+        <div className={'info-property'}>
           {skinItem.property}
         </div>
         <div className={'price'}>{skinItem.price} ₽</div>

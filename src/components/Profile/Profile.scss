@@ -1,0 +1,197 @@
+.container {
+  &-flex {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+
+    padding-bottom: 32px;
+    border-bottom: 1px solid #3D4554;
+
+    .left-side {
+      display: flex;
+      flex-direction: column;
+
+      &-title {
+        font-size: 27px;
+        font-weight: 500;
+        margin-bottom: 12px;
+      }
+
+      &-subtitle {
+        font-size: 16px;
+        font-weight: 100;
+
+        span {
+          font-size: 17.5px;
+          font-weight: 400;
+        }
+      }
+
+      &-rare {
+        display: flex;
+        font-size: 16px;
+        font-weight: 100;
+        margin-top: 42px;
+
+        .rare-title {
+          margin-right: 24px;
+        }
+
+        .rare-item {
+          width: 41px;
+          display: flex;
+          margin-right: 16px;
+
+          .number {
+            opacity: .5;
+            font-weight: 100;
+          }
+
+          .square {
+            cursor: pointer;
+            outline: 0;
+            background-color: transparent;
+            font-size: 0;
+            color: transparent;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #fff;
+            margin-right: 12px;
+
+            &-mystery {
+              border-color: #FFCE50;
+            }
+
+            &-covert {
+              border-color: #ED422B;
+            }
+
+            &-classified {
+              border-color: #CF309C;
+            }
+
+            &-restricted {
+              border-color: #8533ED;
+            }
+
+            &-mil-spec-grade {
+              border-color: #275CE4;
+            }
+          }
+        }
+      }
+    }
+
+    .right-side {
+      position: relative;
+
+      &-search {
+        color: #fff;
+        outline: 0;
+        background-color: transparent;
+        border: 1px solid #3D4554;
+        border-radius: 24px;
+        width: 392px;
+        padding: 16px 0;
+        padding-left: 48px;
+
+        ::placeholder {
+          opacity: .5;
+        }
+      }
+
+      i {
+        font-size: 18px;
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        z-index: 10;
+      }
+    }
+  }
+
+  .categories {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 0 40px;
+
+    &-all {
+      font-size: 17px;
+      color: #FFCE50;
+    }
+
+    &-change {
+      font-size: 17px;
+      color: #fff;
+    }
+  }
+
+  .profile-skin {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 70px;
+    gap: 12px;
+
+    &-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 120px;
+      height: 132px;
+      background-color: #272E3B;
+      border-radius: 16px;
+      overflow: hidden;
+
+      img {
+        width: 88px;
+        height: 66px;
+        margin-top: 10px;
+        margin-bottom: 16px;
+      }
+
+      span {
+        font-size: 16px;
+      }
+
+      .light {
+        font-size: 0;
+        color: transparent;
+        position: absolute;
+        bottom: -17px;
+        left: 43%;
+        z-index: 10;
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        transform: rotate(45deg);
+
+        &-Mystery {
+          background-color: #FFCE50;
+          box-shadow: 0px 0px 35px 10px #FFCE50;
+        }
+
+        &-Covert  {
+          background-color: #ED422B;
+          box-shadow: 0px 0px 35px 10px #ED422B;
+        }
+
+        &-Classified  {
+          background-color: #CF309C;
+          box-shadow: 0px 0px 35px 10px #CF309C;
+        }
+
+        &-Restricted  {
+          background-color: #8533ED;
+          box-shadow: 0px 0px 35px 10px #8533ED;
+        }
+
+        &-Mil-Spec-Grade  {
+          background-color: #275CE4;
+          box-shadow: 0px 0px 35px 10px #275CE4;
+        }
+      }
+    }
+  }
+}
