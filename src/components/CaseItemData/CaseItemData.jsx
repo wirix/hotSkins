@@ -62,19 +62,25 @@ const CaseItemData = () => {
 
   // Продаем айтем
   const sellItem = (price) => {
-    updateBalanceUser(uid, Math.round(balance + price))
     setIsCarousel(false)
     setDropItem(false)
     setLeaveSkin(false)
+
+    let arr = inventory.filter((item, i) => i !== inventory.length - 1)
+    updateInventoryUser(uid, arr)
+    updateBalanceUser(uid, Math.round(balance + price))
   }
 
-  const leaveSkinInProfile = (item) => {
+  const updateInvetory = (item) => {
     if (!inventory) {
       updateInventoryUser(uid, [item])
     } else {
       let arrayDataItems = [...inventory, item]
       updateInventoryUser(uid, arrayDataItems)
     }
+  }
+
+  const leaveSkinInProfile = (item) => {
     setLeaveSkin(false)
     setIsCarousel(false)
     setDropItem(false)
@@ -105,7 +111,7 @@ const CaseItemData = () => {
       StatTrak: fullDataSkinData.StatTrak,
       property: fullDataSkinData.property,
     }
-
+    updateInvetory(skinItem)
     setIsCarousel(true)
     updateBalanceUser(uid, balance - caseData.price)
     setSkinItem(skinItem)

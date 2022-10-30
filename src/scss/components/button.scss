@@ -34,6 +34,55 @@
     }
   }
 
+  &-small {
+
+    &-Mystery {
+      padding: 4px 10px;
+      background-color: #FFCE50;
+      box-shadow: 0px 0px 10px 1px #FFCE50;
+
+      &:hover {
+        background-color: #f6bf35;
+      }
+    }
+  
+    &-Covert {
+      padding: 4px 10px;
+      background-color: #ED422B;
+      box-shadow: 0px 0px 10px 1px #ED422B;
+      &:hover {
+        background-color: #c13927;
+      }
+    }
+  
+    &-Classified {
+      padding: 4px 10px;
+      background-color: #CF309C;
+      box-shadow: 0px 0px 10px 1px #CF309C;
+      &:hover {
+        background-color: #a92b81;
+      }
+    }
+  
+    &-Restricted {
+      padding: 4px 10px;
+      background-color: #8533ED;
+      box-shadow: 0px 0px 10px 1px #8533ED;
+      &:hover {
+        background-color: #6425b7;
+      }
+    }
+  
+    &-Mil-Spec-Grade {
+      padding: 4px 10px;
+      background-color: #275CE4;
+      box-shadow: 0px 0px 10px 1px #275CE4;
+      &:hover {
+        background-color: #1c47b6;
+      }
+    }
+  }
+
   &-min-width {
     min-width: 160px;
     margin: 0 5px;

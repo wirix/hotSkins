@@ -13,7 +13,9 @@ const ControlBtn = (props) => {
 
       {props.isAuth &&
        !props.allowBuy &&
-        <button className={'btn btn-min-width'}>Пополнить баланс</button>}
+        !props.duringCarousel &&
+         !props.leaveSkin &&
+         <Link to='/profile' className={'btn btn-min-width'}>Пополнить баланс</Link>}
 
       {!props.isAuth &&
        <Link className={'btn btn-min-width'} to='/signin'>Войти, чтобы открыть</Link>}

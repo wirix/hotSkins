@@ -1,0 +1,62 @@
+.categories-rare {
+  display: flex;
+  font-size: 16px;
+  font-weight: 100;
+  margin-top: 42px;
+
+  @media (max-width: 690px) {
+    margin-top: 15px;
+  }
+
+  .rare-title {
+    margin-right: 24px;
+
+    @media (max-width: 400px) {
+      display: none;
+    }
+  }
+
+  .rare-item {
+    width: 41px;
+    display: flex;
+    margin-right: 16px;
+
+    .number {
+      opacity: .5;
+      font-weight: 100;
+    }
+
+    .square {
+      cursor: pointer;
+      outline: 0;
+      background-color: transparent;
+      font-size: 0;
+      color: transparent;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 1px solid #fff;
+      margin-right: 12px;
+
+      &-mystery {
+        border-color: #FFCE50;
+      }
+
+      &-covert {
+        border-color: #ED422B;
+      }
+
+      &-classified {
+        border-color: #CF309C;
+      }
+
+      &-restricted {
+        border-color: #8533ED;
+      }
+
+      &-mil-spec-grade {
+        border-color: #275CE4;
+      }
+    }
+  }
+}
