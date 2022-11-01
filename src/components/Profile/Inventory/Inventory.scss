@@ -1,73 +1,78 @@
-.profile-skin {
-  margin-top: 20px;
+.container-inventory {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  padding-bottom: 70px;
-  gap: 12px;
 
-  &-item {
-    position: relative;
+  .profile-skin {
+    margin-top: 20px;
     display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 120px;
-    height: 142px;
-    background-color: #272E3B;
-    border-radius: 16px;
-    overflow: hidden;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-bottom: 70px;
+    gap: 12px;
 
-    @media (max-width: 419px) {
-      width: 105px;
-    }
+    &-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 120px;
+      height: 142px;
+      background-color: #272E3B;
+      border-radius: 16px;
+      overflow: hidden;
 
-    img {
-      width: 88px;
-      height: 66px;
-      margin-top: 10px;
-      margin-bottom: 6px;
-    }
-
-    span {
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-
-    .light {
-      font-size: 0;
-      color: transparent;
-      position: absolute;
-      bottom: -17px;
-      left: 43%;
-      z-index: 10;
-      width: 20px;
-      height: 20px;
-      border-radius: 5px;
-      transform: rotate(45deg);
-
-      &-Mystery {
-        background-color: #FFCE50;
-        box-shadow: 0px 0px 35px 10px #FFCE50;
+      @media (max-width: 419px) {
+        width: 105px;
       }
 
-      &-Covert {
-        background-color: #ED422B;
-        box-shadow: 0px 0px 35px 10px #ED422B;
+      img {
+        width: 88px;
+        height: 66px;
+        margin-top: 10px;
+        margin-bottom: 6px;
       }
 
-      &-Classified {
-        background-color: #CF309C;
-        box-shadow: 0px 0px 35px 10px #CF309C;
+      span {
+        font-size: 16px;
+        margin-bottom: 5px;
       }
 
-      &-Restricted {
-        background-color: #8533ED;
-        box-shadow: 0px 0px 35px 10px #8533ED;
-      }
+      .light {
+        font-size: 0;
+        color: transparent;
+        position: absolute;
+        bottom: -17px;
+        left: 43%;
+        z-index: 10;
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        transform: rotate(45deg);
 
-      &-Mil-Spec-Grade {
-        background-color: #275CE4;
-        box-shadow: 0px 0px 35px 10px #275CE4;
+        &-Mystery {
+          background-color: #FFCE50;
+          box-shadow: 0px 0px 35px 10px #FFCE50;
+        }
+
+        &-Covert {
+          background-color: #ED422B;
+          box-shadow: 0px 0px 35px 10px #ED422B;
+        }
+
+        &-Classified {
+          background-color: #CF309C;
+          box-shadow: 0px 0px 35px 10px #CF309C;
+        }
+
+        &-Restricted {
+          background-color: #8533ED;
+          box-shadow: 0px 0px 35px 10px #8533ED;
+        }
+
+        &-Mil-Spec-Grade {
+          background-color: #275CE4;
+          box-shadow: 0px 0px 35px 10px #275CE4;
+        }
       }
     }
   }

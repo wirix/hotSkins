@@ -6,7 +6,7 @@ const CaseItem = ({ imageUrl, title, price, id }) => {
   const maxLength = 22
 
   return (
-    <Link to={`/cases/${id}`}>
+    <Link to={`/cases/${id}`} className={'case-container'}>
       <div className={'cases-item'}>
         <img src={imageUrl} alt="" />
         <div className={'subtitle'}>{title.slice(0, maxLength)}{title.length > 22 ? '...' : null}</div>

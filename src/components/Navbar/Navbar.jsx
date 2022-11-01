@@ -34,10 +34,10 @@ const Navbar = () => {
         <div className={`navbar-mobile ${isNavbar ? 'navbar-mobile-open' : 'navbar-mobile-close'}`}>
           <div className={'container container-transparent'}>
             <div className={'link'}>
-              {isAuth && 
-              <Link to='/profile' className={'link-item'} onClick={() => setIsNavbar(false)}>
-                Профиль
-              </Link>}
+              {isAuth &&
+                <Link to='/profile' className={'link-item'} onClick={() => setIsNavbar(false)}>
+                  Профиль
+                </Link>}
               <Link to='/home' className={'link-item'} onClick={() => setIsNavbar(false)}>
                 Кейсы
               </Link>
@@ -50,13 +50,13 @@ const Navbar = () => {
               <Link to='/contacts' className={'link-item'} onClick={() => setIsNavbar(false)}>
                 Контакты
               </Link>
-              {isAuth ? 
-              <Link onClick={linkLogout} to='/' className={'link-item'}>
-                Выйти
-              </Link> : 
-              <Link onClick={linkLogout} to='/signin' className={'link-item'}>
-                Войти
-              </Link>}
+              {isAuth ?
+                <Link onClick={linkLogout} to='/' className={'link-item'}>
+                  Выйти
+                </Link> :
+                <Link onClick={linkLogout} to='/signin' className={'link-item'}>
+                  Войти
+                </Link>}
             </div>
           </div>
         </div>
@@ -73,21 +73,21 @@ const Navbar = () => {
         </div>
         {isAuth &&
           <div className={'account'}>
-            <div className={'account-container'} style={{ width: correctBalance.length < 6 && '100%'}}>
+            <div className={'account-container'} style={{ width: correctBalance.length < 6 && '100%' }}>
               <Link className={'account-photo'} to='/profile'>
                 <img src={userPhoto} alt="" />
               </Link>
               <div className={'account-info'}>
                 <Link className={'account-info-username'} to='/profile'>{username}</Link>
                 <div className={'account-info-balance'} style={{ width: correctBalance.length < 6 && '120px' }}>
-                  Баланс: 
-                  <span style={{ fontSize: correctBalance.length >= 7 && '13px'}}>
+                  Баланс:
+                  <span style={{ fontSize: correctBalance.length >= 7 && '13px' }}>
                     {correctBalance}₽
                   </span>
                 </div>
               </div>
             </div>
-            
+
             <i onClick={() => logout()} className="ri-logout-box-line"></i>
           </div>}
         {isAuth ? null : <Link to={'/signin'} className={'btn'}>Войти</Link>}

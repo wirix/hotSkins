@@ -6,23 +6,23 @@ const CategoriesRare = () => {
     <div className={'categories-rare'}>
       <span className={'rare-title'}>Редкость</span>
       <span className={'rare-item'}>
-        <button className={'square square-mystery'}>square</button>
+        <button className={'square square-mystery'} >square</button>
         <span className={'number'}>0</span>
       </span>
       <span className={'rare-item'}>
-        <button className={'square square-covert'}>square</button>
+        <button className={'square square-covert'} >square</button>
         <span className={'number'}>0</span>
       </span>
       <span className={'rare-item'}>
-        <button className={'square square-classified'}>square</button>
+        <button className={'square square-classified'} >square</button>
         <span className={'number'}>0</span>
       </span>
       <span className={'rare-item'}>
-        <button className={'square square-restricted'}>square</button>
+        <button className={'square square-restricted'} >square</button>
         <span className={'number'}>0</span>
       </span>
       <span className={'rare-item'}>
-        <button className={'square square-mil-spec-grade'}>square</button>
+        <button className={'square square-mil-spec-grade'} >square</button>
         <span className={'number'}>0</span>
       </span>
     </div>

@@ -8,6 +8,13 @@ import './Profile.scss'
 const Profile = () => {
   const { inventory, uid, balance } = useSelector(state => state.login)
 
+  // const [mysteryRare, setMysteryRare] = useState(false)
+  // const [covertRare, setCovertRare] = useState(false)
+  // const [classifiedRare, setClassifiedRare] = useState(false)
+  // const [restrictedRare, setRestrictedRare] = useState(false)
+  // const [milSpecGradeRare, setMilSpecGradeRare] = useState(false)
+  // const [categoryObj, setCategoryObj] = useState([])
+
   const sellItem = (uid, indexItem, price) => {
     let arr = inventory.filter((item, i) => i !== indexItem)
     updateInventoryUser(uid, arr)
@@ -16,7 +23,7 @@ const Profile = () => {
 
   let inventoryLength = inventory !== undefined ? inventory.length : 0
   let inventorySum = inventory !== undefined && inventory.reduce((sum, item) => sum + item.price, 0)
-
+  
   return (
     <div className={'container container-transparent'}>
       <div className={'container-profile'}>
@@ -28,13 +35,24 @@ const Profile = () => {
             на сумму
             <span> {Math.round(inventorySum)} ₽ </span>
           </div>
-          <CategoriesRare />
+          <CategoriesRare
+            // setMysteryRare={setMysteryRare}
+            // setCovertRare={setCovertRare}
+            // setClassifiedRare={setClassifiedRare}
+            // setRestrictedRare={setRestrictedRare}
+            // setMilSpecGradeRare={setMilSpecGradeRare}
+            // mysteryRare={mysteryRare}
+            // covertRare={covertRare}
+            // classifiedRare={classifiedRare}
+            // restrictedRare={restrictedRare}
+            // milSpecGradeRare={milSpecGradeRare} 
+            />
         </div>
         <div className={'right-side'}>
           <button className={'btn'} onClick={() => updateBalanceUser(uid, balance + 3000)}>Добавить 3000руб на аккаунт</button>
         </div>
       </div>
-      <Inventory uid={uid} inventory={inventory} sellItem={sellItem}/>
+      <Inventory uid={uid} inventory={inventory} sellItem={sellItem} />
     </div>
   )
 }

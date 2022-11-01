@@ -1,6 +1,7 @@
-a {
+.case-container {
   text-decoration: none;
   color: #fff;
+  margin: 0 5px;
   
   .cases-item {
     width: 220px;
@@ -10,7 +11,7 @@ a {
     align-items: center;
     padding: 0 5px;
     cursor: pointer;
-    margin-bottom: 35px;
+    margin-bottom: 50px;
 
     .subtitle {
       text-align: center;
@@ -22,7 +23,7 @@ a {
 
     img {
       width: 220px;
-      height: 220px;
+      height: 180px;
     }
 
     button {
@@ -31,7 +32,7 @@ a {
 
     @media (max-width: 748px) {
       width: 200px;
-      height: 200px;
+      height: 150px;
 
       img {
         width: 200px;
@@ -45,7 +46,7 @@ a {
 
     @media (max-width: 436px) {
       width: 180px;
-      height: 180px;
+      height: 138px;
 
       img {
         width: 180px;
