@@ -4,8 +4,12 @@ import axios from 'axios'
 export const fetchCases = createAsyncThunk(
   'cases/fetchCases',
   async () => {
-    const { data } = await axios.get(`https://634a618a5df952851410556e.mockapi.io/hotSkins`)
-    return data
+    try {
+      const { data } = await axios.get(`https://634a618a5df952851410556e.mockapi.io/hotSkins`)
+      return data
+    } catch (e) {
+      console.log(e)
+    }
   }
 )
 

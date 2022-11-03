@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './SignIn.scss'
 import login from '../../assets/img/login.png'
-import {Formik} from 'formik'
+import { Formik } from 'formik'
 import { funSignInWithEmailAndPassword } from '../../firebase'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import GetAuth from '../../utils/GetAuth'
@@ -14,9 +14,9 @@ const SighIn = () => {
 
   const SignupSchema = Yup.object().shape({
     email: Yup.string().email(`Неверно указан email`).required('Поле обязательно!'),
-    password: Yup.string().required('Поле обязательно!').min(8, 'Минимум 8 символов')
+    password: Yup.string().required('Поле обязательно!').min(8, 'Минимум 8 символов'),
   });
-  
+
   // после входа перекидывает на главную
   useEffect(() => {
     if (location.pathname !== '/home' && isAuth) {
@@ -35,10 +35,10 @@ const SighIn = () => {
         <div className={'form'}>
           <h1>HotSkins</h1>
           <Formik
-            initialValues={{email: '', password: '' }}
+            initialValues={{ email: '', password: '' }}
             validateOnBlur
             validationSchema={SignupSchema}
-            onSubmit={ async (values) => {
+            onSubmit={async (values) => {
               let response = funSignInWithEmailAndPassword(values.email, values.password)
               // ответ промисом
               response.then(e => {
@@ -49,44 +49,44 @@ const SighIn = () => {
                 }
               })
             }}>
-            {({values, errors, touched, handleChange, handleBlur, handleSubmit, isValid, dirty}) => (
+            {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isValid, dirty }) => (
               <form onSubmit={handleSubmit} className={'formik'}>
-                
+
                 <div className={'formik-item'}>
-                  <input 
-                  type="text" 
-                  name='email' 
-                  onChange={handleChange} 
-                  value={values.email} 
-                  onBlur={handleBlur}
-                  placeholder={'Ваш email'}/>
+                  <input
+                    type="text"
+                    name='email'
+                    onChange={handleChange}
+                    value={values.email}
+                    onBlur={handleBlur}
+                    placeholder={'Ваш email'} />
                   {errors.email || isValid.email ? (
                     <div className={'error'}><i className="ri-error-warning-line"></i> {errors.email}</div>
                   ) : null}
                 </div>
-                
+
                 <div className={'formik-item'}>
-                  <input 
-                    type="password" 
-                    name='password' 
-                    onChange={handleChange} 
-                    value={values.password} 
+                  <input
+                    type="password"
+                    name='password'
+                    onChange={handleChange}
+                    value={values.password}
                     onBlur={handleBlur}
-                    placeholder={'Пароль'}/>
+                    placeholder={'Пароль'} />
                   {errors.password || isValid.password ? (
                     <div className={`error ${reasonsError && 'error-mb'}`}><i className="ri-error-warning-line"></i> {errors.password}</div>
                   ) : null}
                 </div>
-                
-                {reasonsError && 
-                  <div className={`error ${reasonsError && 'error-two'}`}>
-                  <div>
-                    <i className="ri-error-warning-line"></i> {reasonsError}
-                  </div>
-                  <div><Link to='/login'>Регистрация</Link></div>
-                </div>}
 
-                <button className={`btn ${reasonsError && 'btn-mb'} ${errors.password && 'btn-mb2'}`} disabled={errors.email || errors.password} onSubmit={handleSubmit}>Войти</button>
+                {reasonsError &&
+                  <div className={`error ${errors.password && 'error-two'}`}>
+                    <div>
+                      <i className="ri-error-warning-line"></i> {reasonsError}
+                    </div>
+                    <div><Link className={'register'} to='/login'>Регистрация</Link></div>
+                  </div>}
+
+                <button className={`btn ${reasonsError && errors.password && 'btn-mb'}`} disabled={errors.email || errors.password} onSubmit={handleSubmit}>Войти</button>
 
               </form>
             )}

@@ -41,14 +41,14 @@ const App = () => {
   if (loading) {
     return null
   }
- 
+  
   return (
     <div className={'app'}>
       <Navbar />
       <Routes>
         <Route path="/" element={isAuth ? <Navigate to='/home' /> : <Main />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={!isAuth ? <Navigate to='/home' /> : <Profile />} />
         <Route path="/signin" element={<SighIn />} />
         <Route path='/login' element={<Login />} />
         <Route path='/cases/:id' element={<CaseItemData />} />
