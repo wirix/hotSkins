@@ -9,6 +9,7 @@ const Profile = () => {
   const { inventory, uid, balance } = useSelector(state => state.login)
 
   const sellItem = (uid, indexItem, price) => {
+    debugger
     let arr = inventory.filter((item, i) => i !== indexItem)
     updateInventoryUser(uid, arr)
     updateBalanceUser(uid, Math.round(balance + price))

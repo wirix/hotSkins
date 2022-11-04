@@ -2,7 +2,7 @@ import './App.scss';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import Main from './components/Main/Main';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import SighIn from './components/SignIn/SignIn';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
@@ -16,10 +16,12 @@ import { getDatabase, ref, onValue } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
 import { setDataAccount } from './redux/slices/loginSlice';
 import Contacts from './components/Contacts/Contacts';
+import { setFilters } from './redux/slices/filterSlice';
 
 const App = () => {
   const [isAuth, loading] = useAuthState(auth);
   const dispatch = useDispatch()
+  const location = useLocation()
 
   useEffect(() => {
     if (auth.currentUser) {
@@ -37,6 +39,20 @@ const App = () => {
       });
     }
   }, [isAuth, dispatch])
+
+  useEffect(() => {
+    if (location.pathname !== '/profile') {
+      let startFilter = {
+        mysteryRare: false,
+        covertRare: false,
+        classifiedRare: false,
+        restrictedRare: false,
+        milSpecGradeRare: false,
+      }
+      dispatch(setFilters(startFilter))
+    }
+  }, [location.pathname])
+  
 
   if (loading) {
     return null
