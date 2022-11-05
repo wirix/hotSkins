@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Navbar.scss'
 import { Link } from 'react-router-dom'
 import userPhoto from '../../assets/img/userPhoto.png'
@@ -20,14 +20,20 @@ const Navbar = () => {
     logout()
   }
 
-  // Если большой баланс, ставим троеточие
-  let correctBalance
-  if (String(balance).length > 10 && balance) {
-    correctBalance = String(balance).slice(0, 10) + '...'
-  } else {
-    correctBalance = String(balance)
-  }
+  const [correctBalance, setCorrectBalance] = useState(0)
 
+  useEffect(() => {
+    if (String(balance).includes('.00')) {
+      setCorrectBalance(balance.slice(0, balance.length - 3))
+    } else {
+      setCorrectBalance(balance)
+    }
+    // Если большой баланс, ставим троеточие
+    if (String(balance).length > 10 && balance) {
+      setCorrectBalance(String(balance).slice(0, 10) + '...')
+    }
+  }, [balance])
+  
   return (
     <div className={'container'}>
       <header className={'header'}>
