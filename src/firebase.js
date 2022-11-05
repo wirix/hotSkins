@@ -14,7 +14,8 @@ const firebaseConfig = {
   messagingSenderId: "438463365403",
   appId: "1:438463365403:web:b07b7df54c5db86d4c13be"
 };
-firebase.initializeApp(firebaseConfig)
+
+firebase.initializeApp(firebaseConfig);
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -27,7 +28,7 @@ export const writeUserData = (user) => {
 }
 
 export const updateBalanceUser = (uid, balance) => {
-  firebase.database().ref(`users/${uid}/balance`).set(balance).catch(error => {
+  firebase.database().ref(`users/${uid}/balance`).set(Number(balance)).catch(error => {
     console.log(error.message)
   });
 }
@@ -67,4 +68,4 @@ export const funSignInWithEmailAndPassword = async (email, password) => {
 
 export const logout = () => {
   signOut(auth)
-}
+};

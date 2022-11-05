@@ -22,8 +22,8 @@ const Navbar = () => {
 
   // Если большой баланс, ставим троеточие
   let correctBalance
-  if (String(balance).length > 6 && balance) {
-    correctBalance = String(balance).slice(0, 6) + '...'
+  if (String(balance).length > 10 && balance) {
+    correctBalance = String(balance).slice(0, 10) + '...'
   } else {
     correctBalance = String(balance)
   }

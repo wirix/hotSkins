@@ -12,9 +12,9 @@ import ControlBtn from './ControlBtn/ControlBtn'
 
 const CaseItemData = () => {
   const params = useParams()
+  const id = params.id
   const dispatch = useDispatch()
   const isAuth = GetAuth()
-  const id = params.id
 
   let clientWidth = document.body.clientWidth
   const random = Math.random()
@@ -155,7 +155,7 @@ const CaseItemData = () => {
     }
 
     return (
-      <Carousel fullObjSkins={fullObjSkins} skinsLength={caseData.skins.length} /> 
+      <Carousel fullObjSkins={fullObjSkins} skinsLength={caseData.skins.length} />
     )
   }
 
@@ -170,15 +170,15 @@ const CaseItemData = () => {
           <h1>{caseData.title}</h1>
           {isCarousel && !dropItem && listRandomSkinCarousel()}
           {!isCarousel && <div className={'case-form'}><img src={caseData.imageUrl} alt='' /></div>}
-          
+
           {isCarousel && <CompletedSkin skinItem={skinItem} />}
         </div>
         <ControlBtn
-          isAuth={isAuth} 
-          allowBuy={allowBuy} 
-          duringCarousel={duringCarousel} 
-          leaveSkin={leaveSkin} 
-          openCase={openCase} 
+          isAuth={isAuth}
+          allowBuy={allowBuy}
+          duringCarousel={duringCarousel}
+          leaveSkin={leaveSkin}
+          openCase={openCase}
           price={caseData.price}
           dropItem={dropItem}
           sellItem={sellItem}

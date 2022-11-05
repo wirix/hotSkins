@@ -54,6 +54,10 @@
           opacity: .7;
           color: #fff;
           -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+          @media (max-width: 400px) {
+            font-size: 15px;
+          }
         }
 
         &-balance {

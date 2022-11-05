@@ -7,8 +7,12 @@
     padding-bottom: 32px;
     border-bottom: 1px solid #3D4554;
 
-    @media (max-width: 690px) {
+    @media (max-width: 798px) {
       flex-direction: column;
+
+      .right-side {
+        margin-top: 20px;
+      }
     }
 
     .left-side {
@@ -32,10 +36,5 @@
       }
     }
 
-    .right-side {
-      @media (max-width: 690px) {
-        margin-top: 20px;
-      }
-    }
   }
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { getSortedInventory } from '../../../utils/getSortedInventory'
 import './Inventory.scss'
 
@@ -55,7 +56,13 @@ const Inventory = ({ inventory, uid, sellItem }) => {
   }, [inventory])
 
   if (inventoryLength === 0) {
-    return <div className={'title'}>Ваш инвентарть пустой</div>
+    return <div className={'profile-title'}>
+      <div className={'suptitle'}>Ваш инвентарть пустой</div>
+      <div>
+        <span>Перейти в </span>
+        <Link className={'profile-link'} to={'/home'}>Кейсы</Link>
+      </div>
+    </div>
   }
 
   return (
@@ -68,7 +75,7 @@ const Inventory = ({ inventory, uid, sellItem }) => {
             <div className={`light light-${item.color === 'Covert Mystery' ? 'Mystery' : item.color}`}></div>
             <button
               className={`btn btn-small-${item.color === 'Covert Mystery' ? 'Mystery' : item.color}`}
-              onClick={() => sellItem(uid, item.index, item.price)}>Продать</button>
+              onClick={() => sellItem(uid, item.index, Number(item.price).toFixed(2))}>Продать</button>
           </div>
         ))}
       </div>

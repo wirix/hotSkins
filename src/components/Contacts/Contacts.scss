@@ -1,13 +1,33 @@
 .contacts {
-  text-align: center;
   .fffff {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    position: relative;
+    width: 250px;
+    height: 60px;
+    border: 1px solid #3D4554;
+    border-radius: 14px;
 
     img {
-      margin: 0 auto;
+      border-radius: 50%;
+      margin: 0 5px;
+      width: 50px;
+      height: 50px;
+    }
+
+    .username {
+      position: absolute;
+      left: 65px;
+      top: 5px;
+      z-index: 1;
+    }
+
+    .link {
+      font-size: 13px;
+      position: absolute;
+      left: 65px;
+      bottom: 12px;
+      color: #F4C038;
     }
   }
 }

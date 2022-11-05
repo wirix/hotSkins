@@ -17,7 +17,7 @@
   }
 
   .rare-item {
-    width: 41px;
+    width: 60px;
     display: flex;
     margin-right: 16px;
 
@@ -27,16 +27,26 @@
     }
 
     .square {
+      position: relative;
       cursor: pointer;
       outline: 0;
       background-color: transparent;
-      font-size: 0;
-      color: transparent;
       width: 20px;
       height: 20px;
       border-radius: 4px;
       border: 1px solid #fff;
       margin-right: 12px;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+      i {
+        font-size: 16px;
+        color: #000;
+        position: absolute;
+        top: 1px;
+        left: 0;
+        right: 0;
+        z-index: 10;
+      }
 
       &-mystery {
         border-color: #FFCE50;

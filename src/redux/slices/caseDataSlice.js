@@ -13,6 +13,7 @@ export const fetchDataCase = createAsyncThunk(
 const initialState = {
   caseData: [],
   loading: false,
+  status: false,
 }
 
 export const caseDataSlice = createSlice({
@@ -26,13 +27,16 @@ export const caseDataSlice = createSlice({
   extraReducers: {
     [fetchDataCase.pending]: (state) => {
       state.loading = true
+      state.status = false
     },
     [fetchDataCase.fulfilled]: (state, action) => {
       state.caseData = action.payload[0]
       state.loading = false
+      state.status = true
     },
     [fetchDataCase.rejected]: (state) => {
       state.loading = false
+      state.status = false
     }
   }
 })

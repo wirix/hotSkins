@@ -30,40 +30,80 @@ const CategoriesRare = ({ inventory }) => {
   }, [mysteryRare, covertRare, classifiedRare, restrictedRare, milSpecGradeRare, dispatch])
 
   useEffect(() => {
+    let mysteryLength = 0
+    let covertLength = 0
+    let classifiedLength = 0
+    let restrictedLength = 0
+    let milSpecGradeLength = 0
     for (let i = 0; i < inventory.length; i++) {
-      debugger
-      if (inventory[i].color === 'Covert Mystery') {
-        debugger
-        setMysteryLength(mysteryLength + 1)
+      switch (inventory[i].color) {
+        case 'Covert Mystery':
+          mysteryLength += 1
+          break
+        case 'Covert':
+          covertLength += 1
+          break
+        case 'Classified':
+          classifiedLength += 1
+          break
+        case 'Restricted':
+          restrictedLength += 1
+          break
+        case 'Mil-Spec-Grade':
+          milSpecGradeLength += 1
+          break
+        default:
+          console.error(`Нет подходящей редкости для ${inventory[i].color}`)
       }
     }
+    setMysteryLength(mysteryLength)
+    setCovertLength(covertLength)
+    setClassifiedLength(classifiedLength)
+    setRestrictedLength(restrictedLength)
+    setMilSpecGradeLength(milSpecGradeLength)
   }, [inventory])
-  // mysteryRare: 'Covert Mystery',
-  //   covertRare: 'Covert',
-  //     classifiedRare: 'Classified',
-  //       restrictedRare: 'Restricted',
-  //         milSpecGradeRare: 'Mil-Spec-Grade',
+
   return (
     <div className={'categories-rare'}>
       <span className={'rare-title'}>Редкость</span>
       <span className={'rare-item'}>
-        <button className={`square square-mystery ${mysteryRare && 'square-mystery-active'}`} onClick={() => setMysteryRare(!mysteryRare)}>square</button>
+        <button
+          className={`square square-mystery ${mysteryRare && 'square-mystery-active'}`}
+          onClick={() => setMysteryRare(!mysteryRare)}>
+          {mysteryRare && <i className={'ri-check-line'}></i>}
+        </button>
         <span className={'number'}>{mysteryLength}</span>
       </span>
       <span className={'rare-item'}>
-        <button className={`square square-covert ${covertRare && 'square-covert-active'}`} onClick={() => setCovertRare(!covertRare)}>square</button>
+        <button
+          className={`square square-covert ${covertRare && 'square-covert-active'}`}
+          onClick={() => setCovertRare(!covertRare)}>
+          {covertRare && <i className={'ri-check-line'}></i>}
+        </button>
         <span className={'number'}>{covertLength}</span>
       </span>
       <span className={'rare-item'}>
-        <button className={`square square-classified ${classifiedRare && 'square-classified-active'}`} onClick={() => setClassifiedRare(!classifiedRare)}>square</button>
+        <button
+          className={`square square-classified ${classifiedRare && 'square-classified-active'}`}
+          onClick={() => setClassifiedRare(!classifiedRare)}>
+          {classifiedRare && <i className={'ri-check-line'}></i>}
+        </button>
         <span className={'number'}>{classifiedLength}</span>
       </span>
       <span className={'rare-item'}>
-        <button className={`square square-restricted ${restrictedRare && 'square-restricted-active'}`} onClick={() => setRestrictedRare(!restrictedRare)}>square</button>
+        <button
+          className={`square square-restricted ${restrictedRare && 'square-restricted-active'}`}
+          onClick={() => setRestrictedRare(!restrictedRare)}>
+          {restrictedRare && <i className={'ri-check-line'}></i>}
+        </button>
         <span className={'number'}>{restrictedLength}</span>
       </span>
       <span className={'rare-item'}>
-        <button className={`square square-mil-spec-grade ${milSpecGradeRare && 'square-mil-spec-grade-active'}`} onClick={() => setMilSpecGradeRare(!milSpecGradeRare)}>square</button>
+        <button
+          className={`square square-mil-spec-grade ${milSpecGradeRare && 'square-mil-spec-grade-active'}`}
+          onClick={() => setMilSpecGradeRare(!milSpecGradeRare)}>
+          {milSpecGradeRare && <i className={'ri-check-line'}></i>}
+        </button>
         <span className={'number'}>{milSpecGradeLength}</span>
       </span>
     </div>

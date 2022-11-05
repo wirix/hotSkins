@@ -87,7 +87,6 @@ const SighIn = () => {
                   </div>}
 
                 <button className={`btn ${reasonsError && errors.password && 'btn-mb'}`} disabled={errors.email || errors.password} onSubmit={handleSubmit}>Войти</button>
-
               </form>
             )}
           </Formik>

@@ -36,10 +36,10 @@ const Login = () => {
         <div className={'form'}>
           <h1>HotSkins</h1>
           <Formik
-            initialValues={{name: '', email: '', password: '' }}
+            initialValues={{ name: '', email: '', password: '' }}
             validateOnBlur
             validationSchema={SignupSchema}
-            onSubmit={ async (values) => {
+            onSubmit={async (values) => {
               let response = await registerWithEmailAndPassword(values.name, values.email, values.password)
               if (response === 'auth/email-already-in-use') {
                 setReasonsError(`Этот email уже используется`)
@@ -85,10 +85,10 @@ const Login = () => {
                     <div className={'error'}><i className="ri-error-warning-line"></i> {errors.password}</div>
                   ) : null}
                 </div>
-                
-                {reasonsError && 
+
+                {reasonsError &&
                   <div className={'reasons-error'}><i className="ri-error-warning-line"></i> {reasonsError} <Link className={'signin'} to='/signin'> Войти</Link></div>}
-                
+
                 <button className={`btn ${reasonsError && errors.password && 'btn-mb'}`} disabled={errors.email || errors.password || errors.name} onSubmit={handleSubmit}>Регистрация</button>
               </form>
             )}

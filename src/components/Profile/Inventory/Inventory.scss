@@ -5,10 +5,10 @@
   .profile-skin {
     margin-top: 20px;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     padding-bottom: 70px;
     gap: 12px;
+    max-width: 1176px;
 
     &-item {
       position: relative;
@@ -74,6 +74,46 @@
           box-shadow: 0px 0px 35px 10px #275CE4;
         }
       }
+    }
+
+    @media (max-width: 1391px) {
+      max-width: 1044px;
+    }
+
+    @media (max-width: 1259px) {
+      max-width: 913px;
+    }
+
+    @media (max-width: 1128px) {
+      max-width: 781px;
+    }
+
+    @media (max-width: 867px) {
+      max-width: 648px;
+    }
+
+    @media (max-width: 735px) {
+      max-width: 516px;
+    }
+
+    @media (max-width: 551px) {
+      max-width: 384px;
+    }
+
+    @media (max-width: 419px) {
+      max-width: 339px;
+    }
+
+    @media (max-width: 374px) {
+      max-width: 318px;
+
+      &-item {
+        width: 98px;
+      }
+    }
+
+    @media (max-width: 353px) {
+      max-width: 208px;
     }
   }
 }

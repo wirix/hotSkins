@@ -1,6 +1,4 @@
 import './App.scss';
-import Footer from './components/Footer/Footer';
-import Navbar from './components/Navbar/Navbar';
 import Main from './components/Main/Main';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import SighIn from './components/SignIn/SignIn';
@@ -17,6 +15,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { setDataAccount } from './redux/slices/loginSlice';
 import Contacts from './components/Contacts/Contacts';
 import { setFilters } from './redux/slices/filterSlice';
+import MainLayout from './layouts/MainLayout';
 
 const App = () => {
   const [isAuth, loading] = useAuthState(auth);
@@ -51,17 +50,16 @@ const App = () => {
       }
       dispatch(setFilters(startFilter))
     }
-  }, [location.pathname])
-  
+  }, [location.pathname, dispatch])
+
 
   if (loading) {
     return null
   }
-  
+
   return (
-    <div className={'app'}>
-      <Navbar />
-      <Routes>
+    <Routes>
+      <Route path='/' element={<MainLayout />}>
         <Route path="/" element={isAuth ? <Navigate to='/home' /> : <Main />} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={!isAuth ? <Navigate to='/home' /> : <Profile />} />
@@ -69,9 +67,8 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/cases/:id' element={<CaseItemData />} />
         <Route path='/contacts' element={<Contacts />} />
-      </Routes>
-      <Footer />
-    </div>
+      </Route>
+    </Routes>
   )
 }
 

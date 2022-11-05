@@ -7,15 +7,16 @@ import './Profile.scss'
 
 const Profile = () => {
   const { inventory, uid, balance } = useSelector(state => state.login)
+  
   const sellItem = (uid, indexItem, price) => {
     let arr = inventory.filter((item, i) => i !== indexItem)
     updateInventoryUser(uid, arr)
-    updateBalanceUser(uid, Math.round(balance + price))
+    updateBalanceUser(uid, Number(balance) + Number(price))
   }
 
   let inventoryLength = inventory !== undefined ? inventory.length : 0
   let inventorySum = inventory !== undefined && inventory.reduce((sum, item) => sum + item.price, 0)
-  
+
   return (
     <div className={'container container-transparent'}>
       <div className={'container-profile'}>
@@ -25,12 +26,12 @@ const Profile = () => {
             Всего
             <span> {inventoryLength} предметов </span>
             на сумму
-            <span> {Math.round(inventorySum)} ₽ </span>
+            <span> {inventorySum.toFixed(2)} ₽ </span>
           </div>
           <CategoriesRare inventory={inventory} />
         </div>
         <div className={'right-side'}>
-          <button className={'btn'} onClick={() => updateBalanceUser(uid, balance + 3000)}>Добавить 3000руб на аккаунт</button>
+          <button className={'btn'} onClick={() => updateBalanceUser(uid, Number(balance) + 3000)}>Добавить 3000руб на аккаунт</button>
         </div>
       </div>
       <Inventory uid={uid} inventory={inventory} sellItem={sellItem} />
