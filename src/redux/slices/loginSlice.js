@@ -20,7 +20,17 @@ export const loginSlice = createSlice({
       state.balance = actions.payload.balance
       state.uid = actions.payload.uid
       state.luckyChance = actions.payload.luckyChance
-      state.inventory = actions.payload.inventory
+      let inventoryWithIndex = []
+      let actionInvenory = actions.payload.inventory
+      if (actionInvenory) {
+        for (let i = 0; i < actionInvenory.length; i++) {
+          const itemsWithIndex = actionInvenory[i]
+          // добаляем индекс чтобы продовался правильный айтэм в сортировке
+          itemsWithIndex.index = i
+          inventoryWithIndex.push(itemsWithIndex)
+        }
+      }
+      state.inventory = inventoryWithIndex
       state.isDataProfile = true
     },
   },

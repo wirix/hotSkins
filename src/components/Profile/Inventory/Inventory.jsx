@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { getSortedInventory } from '../../../utils/getSortedInventory'
 import './Inventory.scss'
 
 const Inventory = ({ inventory, uid, sellItem }) => {
@@ -9,7 +10,6 @@ const Inventory = ({ inventory, uid, sellItem }) => {
   const [currentCategory, setCurrentCategory] = useState([])
   const [completedInventory, setCompletedInventory] = useState([])
   const completedLength = inventory !== undefined ? completedInventory.length : 0
-  console.log(completedLength)
 
   // выбор категориии
   useEffect(() => {
@@ -34,16 +34,7 @@ const Inventory = ({ inventory, uid, sellItem }) => {
 
   // айтэмы подходящие по категории сетаются
   useEffect(() => {
-    let currentItems = []
-    for (let key of currentCategory) {
-      for (let i = 0; i < inventoryLength; i++) {
-        if (inventoryReverse[i].color === key) {
-          currentItems.push(inventoryReverse[i])
-        }
-      }
-    }
-    // если ничего не выбрано, то сетаем все
-    setCompletedInventory(currentCategory.length === 0 ? inventoryReverse : currentItems)
+    getSortedInventory(setCompletedInventory, inventoryReverse, currentCategory, inventoryLength)
     // eslint-disable-next-line
   }, [currentCategory])
 
@@ -52,10 +43,13 @@ const Inventory = ({ inventory, uid, sellItem }) => {
     if (inventoryLength !== 0 && completedLength === 0) {
       setCompletedInventory(inventoryReverse)
     }
-
+    setCompletedInventory(inventoryLength === 0 ? [] : inventoryReverse)
     // срабатывает если мы продаем последний айтэм
     if (inventoryLength < completedLength) {
       setCompletedInventory(inventoryLength === 0 ? [] : inventoryReverse)
+    } else if (inventoryLength > completedLength) {
+      // после продажи в режиме категорий обновляем completedInventory
+      getSortedInventory(setCompletedInventory, inventoryReverse, currentCategory, inventoryLength)
     }
     // eslint-disable-next-line
   }, [inventory])
@@ -74,7 +68,7 @@ const Inventory = ({ inventory, uid, sellItem }) => {
             <div className={`light light-${item.color === 'Covert Mystery' ? 'Mystery' : item.color}`}></div>
             <button
               className={`btn btn-small-${item.color === 'Covert Mystery' ? 'Mystery' : item.color}`}
-              onClick={() => sellItem(uid, inventoryLength - i - 1, item.price)}>Продать</button>
+              onClick={() => sellItem(uid, item.index, item.price)}>Продать</button>
           </div>
         ))}
       </div>

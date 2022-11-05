@@ -40,22 +40,42 @@
 
       &-mystery {
         border-color: #FFCE50;
+
+        &-active {
+          background-color: #FFCE50;
+        }
       }
 
       &-covert {
         border-color: #ED422B;
+
+        &-active {
+          background-color: #ED422B;
+        }
       }
 
       &-classified {
         border-color: #CF309C;
+
+        &-active {
+          background-color: #CF309C;
+        }
       }
 
       &-restricted {
         border-color: #8533ED;
+
+        &-active {
+          background-color: #8533ED;
+        }
       }
 
       &-mil-spec-grade {
         border-color: #275CE4;
+
+        &-active {
+          background-color: #275CE4;
+        }
       }
     }
   }

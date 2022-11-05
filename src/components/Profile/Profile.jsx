@@ -7,9 +7,7 @@ import './Profile.scss'
 
 const Profile = () => {
   const { inventory, uid, balance } = useSelector(state => state.login)
-
   const sellItem = (uid, indexItem, price) => {
-    debugger
     let arr = inventory.filter((item, i) => i !== indexItem)
     updateInventoryUser(uid, arr)
     updateBalanceUser(uid, Math.round(balance + price))
@@ -29,7 +27,7 @@ const Profile = () => {
             на сумму
             <span> {Math.round(inventorySum)} ₽ </span>
           </div>
-          <CategoriesRare />
+          <CategoriesRare inventory={inventory} />
         </div>
         <div className={'right-side'}>
           <button className={'btn'} onClick={() => updateBalanceUser(uid, balance + 3000)}>Добавить 3000руб на аккаунт</button>
