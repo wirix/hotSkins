@@ -6,7 +6,7 @@ import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux'
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import Profile from './components/Profile/Profile';
 import { useAuthState } from "react-firebase-hooks/auth";
 import CaseItemData from './components/CaseItemData/CaseItemData';
@@ -16,8 +16,9 @@ import { setDataAccount } from './redux/slices/loginSlice';
 import Contacts from './components/Contacts/Contacts';
 import { setFilters } from './redux/slices/filterSlice';
 import MainLayout from './layouts/MainLayout';
+import { IFilterRare } from './@types/interfaces';
 
-const App = () => {
+const App: FC = () => {
   const [isAuth, loading] = useAuthState(auth);
   const dispatch = useDispatch()
   const location = useLocation()
@@ -27,7 +28,7 @@ const App = () => {
       // загрузка в redux данных профиля
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          const uid = user.uid
+          const uid: string = user.uid
           const database = getDatabase();
           const balance = ref(database, 'users/' + uid)
           onValue(balance, (snapshot) => {
@@ -41,7 +42,7 @@ const App = () => {
 
   useEffect(() => {
     if (location.pathname !== '/profile') {
-      let startFilter = {
+      let startFilter: IFilterRare = {
         mysteryRare: false,
         covertRare: false,
         classifiedRare: false,

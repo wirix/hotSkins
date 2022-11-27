@@ -66,7 +66,7 @@ const CaseItemData = () => {
     setDropItem(false)
     setLeaveSkin(false)
 
-    let arr = inventory.filter((item, i) => i !== inventory.length - 1)
+    let arr = inventory.filter((_, i) => i !== inventory.length - 1)
     updateInventoryUser(uid, arr)
     updateBalanceUser(uid, Math.round(balance + price))
   }
