@@ -16,7 +16,7 @@ import { setDataAccount } from './redux/slices/loginSlice';
 import Contacts from './components/Contacts/Contacts';
 import { setFilters } from './redux/slices/filterSlice';
 import MainLayout from './layouts/MainLayout';
-import { IFilterRare } from './@types/interfaces';
+import { IFilterRare } from './redux/slices/filterSlice';
 
 const App: FC = () => {
   const [isAuth, loading] = useAuthState(auth);

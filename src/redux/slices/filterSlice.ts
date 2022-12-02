@@ -1,6 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-const initialState = {
+export interface IFilterRare {
+  mysteryRare: boolean,
+  covertRare: boolean,
+  classifiedRare: boolean,
+  restrictedRare: boolean,
+  milSpecGradeRare: boolean,
+}
+
+const initialState: {
+  filter: IFilterRare
+} = {
   filter: {
     mysteryRare: false,
     covertRare: false,
@@ -14,7 +24,7 @@ export const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    setFilters: (state, actions) => {
+    setFilters: (state, actions: PayloadAction<IFilterRare>) => {
       state.filter = {
         ...state.filter,
         mysteryRare: actions.payload.mysteryRare,

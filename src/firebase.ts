@@ -41,20 +41,29 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 export const writeUserData = (user: IStartProfileData) => {
-  firebase.database().ref(`users/${user.uid}`).set(user).catch(error => {
-    console.log(error.message)
+  firebase.database().ref(`users/${user.uid}`).set(user)
+  .catch(error => {
+    if (error instanceof Error) {
+      console.log(error.message)
+    }
   });
 }
 
 export const updateBalanceUser = (uid: string, balance: string) => {
-  firebase.database().ref(`users/${uid}/balance`).set(Number(balance)).catch(error => {
-    console.log(error.message)
+  firebase.database().ref(`users/${uid}/balance`).set(Number(balance))
+  .catch(error => {
+    if (error instanceof Error) {
+      console.log(error.message)
+    }
   });
 }
 
 export const updateInventoryUser = (uid: string, inventory: IInventoryInner[]) => {
-  firebase.database().ref(`users/${uid}/inventory`).set(inventory).catch(error => {
-    console.log(error.message)
+  firebase.database().ref(`users/${uid}/inventory`).set(inventory)
+  .catch(error => {
+    if (error instanceof Error) {
+      console.log(error.message)
+    }
   });
 }
 
@@ -71,8 +80,8 @@ export const registerWithEmailAndPassword = async (username: string, email: stri
       inventory: [],
     }
     writeUserData(userData)
-  } catch (err) {
-    return err.code
+  } catch (error) {
+    return error.code
   }
 };
 
@@ -80,8 +89,7 @@ export const funSignInWithEmailAndPassword = async (email: string, password: str
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
-    let error = err.message
-    return error
+    return err.message
   }
 };
 

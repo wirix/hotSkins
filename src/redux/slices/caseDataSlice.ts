@@ -1,16 +1,29 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+interface ICaseData {
+  id: number,
+  imageUrl: string,
+  title: string,
+  price: number
+}
+
+interface IDataSlice {
+  caseData: ICaseData[],
+  loading: boolean,
+  status: boolean
+}
+
 export const fetchDataCase = createAsyncThunk(
   'case/fetchDataCase',
-  async (params) => {
-    let { id } = params
+  async (params: {id: string}) => {
+    const { id } = params
     const { data } = await axios.get(`https://634a618a5df952851410556e.mockapi.io/cases${id === '1' ? '' : id}?id=${id}`)
     return data
   }
 )
 
-const initialState = {
+const initialState: IDataSlice = {
   caseData: [],
   loading: false,
   status: false,
@@ -19,28 +32,22 @@ const initialState = {
 export const caseDataSlice = createSlice({
   name: 'case',
   initialState,
-  reducers: {
-    setDataCase: (state, actions) => {
-      state.caseData = actions.payload
-    },
-  },
-  extraReducers: {
-    [fetchDataCase.pending]: (state) => {
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchDataCase.pending, (state) => {
       state.loading = true
       state.status = false
-    },
-    [fetchDataCase.fulfilled]: (state, action) => {
+    })
+    .addCase(fetchDataCase.fulfilled, (state, action) => {
       state.caseData = action.payload[0]
       state.loading = false
       state.status = true
-    },
-    [fetchDataCase.rejected]: (state) => {
+    })
+    .addCase(fetchDataCase.rejected, (state) => {
       state.loading = false
       state.status = false
-    }
+    })
   }
 })
-
-export const { setDataCase } = caseDataSlice.actions
 
 export default caseDataSlice.reducer

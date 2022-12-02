@@ -10,10 +10,6 @@ export interface IInventoryInner {
   type: string,
 }
 
-export interface IFilterRare {
-  mysteryRare: boolean,
-  covertRare: boolean,
-  classifiedRare: boolean,
-  restrictedRare: boolean,
-  milSpecGradeRare: boolean,
+export interface IInventory {
+  [index: number]: IInventoryInner
 }
