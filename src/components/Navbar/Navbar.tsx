@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './Navbar.scss'
 import { Link } from 'react-router-dom'
 import userPhoto from '../../assets/img/userPhoto.png'
@@ -6,34 +6,38 @@ import { useRef } from 'react'
 import { logout } from '../../firebase'
 import GetAuth from '../../utils/GetAuth'
 import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
 
 const Navbar = () => {
-  const iconRef = useRef(null)
+  const iconRef = useRef<HTMLElement>(null)
   const isAuth = GetAuth()
 
-  const { username, balance } = useSelector(state => state.login)
+  const { username, balance } = useSelector((state: RootState) => state.login)
+  const balanceString = String(balance)
 
-  const [isNavbar, setIsNavbar] = useState(false)
+  const [isNavbar, setIsNavbar] = useState<boolean>(false)
 
   const linkLogout = () => {
     setIsNavbar(false)
     logout()
   }
 
-  const [correctBalance, setCorrectBalance] = useState(0)
+  const [correctBalance, setCorrectBalance] = useState<string>('0')
 
   useEffect(() => {
-    if (String(balance).includes('.00')) {
-      setCorrectBalance(balance.slice(0, balance.length - 3))
+    // если копеек на балансе xxxx.00руб
+    if (balanceString.includes('.00')) {
+      setCorrectBalance(balanceString.slice(0, balanceString.length - 3))
     } else {
-      setCorrectBalance(balance)
+      setCorrectBalance(balanceString)
     }
     // Если большой баланс, ставим троеточие
-    if (String(balance).length > 10 && balance) {
-      setCorrectBalance(String(balance).slice(0, 10) + '...')
+    if (balanceString.length > 10 && balance) {
+      setCorrectBalance(balanceString.slice(0, 10) + '...')
     }
-  }, [balance])
-  
+    // мб balanceString убрать
+  }, [balance, balanceString])
+
   return (
     <div className={'container'}>
       <header className={'header'}>

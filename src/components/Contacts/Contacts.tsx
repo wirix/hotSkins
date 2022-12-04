@@ -1,4 +1,3 @@
-import React from 'react'
 import './Contacts.scss'
 import imgContact from '../../assets/img/imgContact.jpg'
 

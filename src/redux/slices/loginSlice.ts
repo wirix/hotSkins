@@ -1,6 +1,17 @@
+import { IInventoryInner } from './../../@types/interfaces';
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+interface ILoginSlice {
+  email: string,
+  balance: number,
+  username: string,
+  uid: string,
+  luckyChance: number,
+  inventory: [] | IInventoryInner[],
+  isDataProfile: boolean,
+}
+
+const initialState: ILoginSlice = {
   email: '',
   balance: 0,
   username: '',
@@ -20,14 +31,14 @@ export const loginSlice = createSlice({
       state.balance = actions.payload.balance.toFixed(2)
       state.uid = actions.payload.uid
       state.luckyChance = actions.payload.luckyChance
-      let inventoryWithIndex = []
+      const inventoryWithIndex: IInventoryInner[] = []
       let actionInvenory = actions.payload.inventory
       if (actionInvenory) {
         for (let i = 0; i < actionInvenory.length; i++) {
-          const itemsWithIndex = actionInvenory[i]
+          const itemWithIndex: IInventoryInner = actionInvenory[i]
           // добаляем индекс чтобы продовался правильный айтэм в сортировке
-          itemsWithIndex.index = i
-          inventoryWithIndex.push(itemsWithIndex)
+          itemWithIndex.index = i
+          inventoryWithIndex.push(itemWithIndex)
         }
       }
       state.inventory = inventoryWithIndex

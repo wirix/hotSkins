@@ -9,7 +9,3 @@ export interface IInventoryInner {
   skinTitle: string,
   type: string,
 }
-
-export interface IInventory {
-  [index: number]: IInventoryInner
-}
