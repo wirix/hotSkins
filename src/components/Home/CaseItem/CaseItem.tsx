@@ -1,9 +1,10 @@
-import React from 'react'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
+import { ICasesData } from '../../../redux/slices/casesSlice'
 import './CaseItem.scss'
 
-const CaseItem = ({ imageUrl, title, price, id }) => {
-  const maxLength = 22
+const CaseItem: FC<ICasesData> = ({ imageUrl, title, price, id }) => {
+  const maxLength: number = 22
 
   return (
     <Link to={`/cases/${id}`} className={'case-container'}>

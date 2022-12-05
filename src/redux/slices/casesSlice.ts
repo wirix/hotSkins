@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-interface ICasesData {
+export interface ICasesData {
   id: number,
   imageUrl: string,
   title: string,

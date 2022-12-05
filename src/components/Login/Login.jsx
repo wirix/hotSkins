@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Formik } from 'formik'
 import '../Login/Login.scss'
 import login from '../../assets/img/login.png'
@@ -45,7 +45,7 @@ const Login = () => {
                 setReasonsError(`Этот email уже используется`)
               }
             }}>
-            {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isValid, dirty }) => (
+            {({ values, errors, handleChange, handleBlur, handleSubmit, isValid }) => (
               <form onSubmit={handleSubmit} className={'formik'}>
                 <div className={'formik-item'}>
                   <input

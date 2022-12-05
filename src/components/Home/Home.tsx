@@ -1,14 +1,14 @@
-import React from 'react'
 import './Home.scss'
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import CaseItem from './CaseItem/CaseItem'
-import { fetchCases } from '../../redux/slices/casesSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { fetchCases, ICasesData } from '../../redux/slices/casesSlice'
+import { useSelector } from 'react-redux'
 import loadingIcon from '../../assets/img/loading.svg'
+import { RootState, useAppDispatch } from '../../redux/store'
 
-const Home = () => {
-  const dispatch = useDispatch()
-  const { cases, loading } = useSelector((state) => state.cases)
+const Home: FC = () => {
+  const dispatch = useAppDispatch()
+  const { cases, loading } = useSelector((state: RootState) => state.cases)
 
   // загрузка кейсов
   useEffect(() => {
@@ -25,7 +25,7 @@ const Home = () => {
       </div>
       {loading ? <span className={'loading'}><img src={loadingIcon} alt="" /></span> : null}
       <div className={'cases'}>
-        {cases && cases.map(item => (
+        {cases && cases.map((item: ICasesData) => (
           <CaseItem imageUrl={item.imageUrl} title={item.title} price={item.price} key={item.id} id={item.id} />
         ))}
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './SignIn.scss'
 import login from '../../assets/img/login.png'
 import { Formik } from 'formik'
@@ -49,7 +49,7 @@ const SighIn = () => {
                 }
               })
             }}>
-            {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isValid, dirty }) => (
+            {({ values, errors, handleChange, handleBlur, handleSubmit, isValid }) => (
               <form onSubmit={handleSubmit} className={'formik'}>
 
                 <div className={'formik-item'}>
