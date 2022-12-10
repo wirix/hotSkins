@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState, FC } from 'react'
 import { useDispatch } from 'react-redux'
+import { IInventoryInner } from '../../../@types/interfaces'
 import { setFilters } from '../../../redux/slices/filterSlice'
 import './CategoriesRare.scss'
 
-const CategoriesRare = ({ inventory }) => {
+interface ICategoriesRareProps {
+  inventory: [] | IInventoryInner[]
+}
+
+const CategoriesRare: FC<ICategoriesRareProps> = ({ inventory }) => {
   const dispatch = useDispatch()
 
-  const [mysteryRare, setMysteryRare] = useState(false)
-  const [covertRare, setCovertRare] = useState(false)
-  const [classifiedRare, setClassifiedRare] = useState(false)
-  const [restrictedRare, setRestrictedRare] = useState(false)
-  const [milSpecGradeRare, setMilSpecGradeRare] = useState(false)
+  const [mysteryRare, setMysteryRare] = useState<boolean>(false)
+  const [covertRare, setCovertRare] = useState<boolean>(false)
+  const [classifiedRare, setClassifiedRare] = useState<boolean>(false)
+  const [restrictedRare, setRestrictedRare] = useState<boolean>(false)
+  const [milSpecGradeRare, setMilSpecGradeRare] = useState<boolean>(false)
 
-  const [mysteryLength, setMysteryLength] = useState(0)
-  const [covertLength, setCovertLength] = useState(0)
-  const [classifiedLength, setClassifiedLength] = useState(0)
-  const [restrictedLength, setRestrictedLength] = useState(0)
-  const [milSpecGradeLength, setMilSpecGradeLength] = useState(0)
+  const [mysteryLength, setMysteryLength] = useState<number>(0)
+  const [covertLength, setCovertLength] = useState<number>(0)
+  const [classifiedLength, setClassifiedLength] = useState<number>(0)
+  const [restrictedLength, setRestrictedLength] = useState<number>(0)
+  const [milSpecGradeLength, setMilSpecGradeLength] = useState<number>(0)
 
   useEffect(() => {
     let filter = {
@@ -30,11 +35,11 @@ const CategoriesRare = ({ inventory }) => {
   }, [mysteryRare, covertRare, classifiedRare, restrictedRare, milSpecGradeRare, dispatch])
 
   useEffect(() => {
-    let mysteryLength = 0
-    let covertLength = 0
-    let classifiedLength = 0
-    let restrictedLength = 0
-    let milSpecGradeLength = 0
+    let mysteryLength: number = 0
+    let covertLength: number = 0
+    let classifiedLength: number = 0
+    let restrictedLength: number = 0
+    let milSpecGradeLength: number = 0
     for (let i = 0; i < inventory.length; i++) {
       switch (inventory[i].color) {
         case 'Covert Mystery':

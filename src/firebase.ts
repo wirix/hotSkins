@@ -49,7 +49,7 @@ export const writeUserData = (user: IStartProfileData) => {
   });
 }
 
-export const updateBalanceUser = (uid: string, balance: string) => {
+export const updateBalanceUser = (uid: string, balance: number) => {
   firebase.database().ref(`users/${uid}/balance`).set(Number(balance))
   .catch(error => {
     if (error instanceof Error) {

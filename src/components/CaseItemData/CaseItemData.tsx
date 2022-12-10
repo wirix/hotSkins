@@ -1,52 +1,58 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, FC } from 'react'
 import './CaseItemData.scss'
 import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchDataCase } from '../../redux/slices/caseDataSlice'
+import { useSelector } from 'react-redux'
+import { fetchDataCase, ISkin, ISkinItems } from '../../redux/slices/caseDataSlice'
 import GetAuth from '../../utils/GetAuth'
 import loadingIcon from '../../assets/img/loading.svg'
 import CompletedSkin from './CompletedSkin/CompletedSkin'
 import { updateBalanceUser, updateInventoryUser } from '../../firebase'
 import Carousel from './Carousel/Carousel'
 import ControlBtn from './ControlBtn/ControlBtn'
+import { RootState, useAppDispatch } from '../../redux/store'
+import { IInventoryInner } from '../../@types/interfaces'
 
-const CaseItemData = () => {
+const CaseItemData: FC = () => {
   const params = useParams()
-  const id = params.id
-  const dispatch = useDispatch()
+  const id: string = params.id
+  const dispatch = useAppDispatch()
   const isAuth = GetAuth()
 
-  let clientWidth = document.body.clientWidth
-  const random = Math.random()
-
-  const { caseData, loading } = useSelector((state) => state.caseData)
-  const { balance, uid, luckyChance, inventory } = useSelector((state) => state.login)
-  const [isCarousel, setIsCarousel] = useState(false);
+  let clientWidth: number = document.body.clientWidth
+  const random: number = Math.random()
+  
+  const { caseData, loading } = useSelector((state: RootState) => state.caseData)
+  const { balance, uid, luckyChance, inventory } = useSelector((state: RootState) => state.login)
+  const [isCarousel, setIsCarousel] = useState<boolean>(false);
   const [skinItem, setSkinItem] = useState(null)
-  const [allowBuy, setAllowBuy] = useState(false)
-  const [dropItem, setDropItem] = useState(false)
-  const [dropPrice, setDropPrice] = useState(0)
-  const [duringCarousel, setDuringCarousel] = useState(false)
-  const [leaveSkin, setLeaveSkin] = useState(false)
-
+  const [allowBuy, setAllowBuy] = useState<boolean>(false)
+  const [dropItem, setDropItem] = useState<boolean>(false)
+  const [dropPrice, setDropPrice] = useState<number>(0)
+  const [duringCarousel, setDuringCarousel] = useState<boolean>(false)
+  const [leaveSkin, setLeaveSkin] = useState<boolean>(false)
   // загрузка подробностей кейса
   useEffect(() => {
     dispatch(fetchDataCase({ id }))
   }, [dispatch, id])
 
   useEffect(() => {
-    if (balance - caseData.price >= 0) {
-      setAllowBuy(true)
-    } else {
-      setAllowBuy(false)
+    if (!Array.isArray(caseData)) {
+      if (balance - caseData.price >= 0) {
+        setAllowBuy(true)
+      } else {
+        setAllowBuy(false)
+      }
     }
-  }, [balance, caseData.price])
+  }, [balance, caseData])
 
   // Расчитывание шанса на редкость айтема
-  const randomRareItem = () => {
-    const quantitySingleRareSkins = caseData.skins.length / 5 - 1
-    const randomItem = Math.round(Math.random() * quantitySingleRareSkins)
-    let randomPlusLucky = random - luckyChance
+  const randomRareItem = (): number => {
+    let quantitySingleRareSkins: number = 0
+    if (!Array.isArray(caseData)) {
+      quantitySingleRareSkins = caseData.skins.length / 5 - 1
+    }
+    const randomItem: number = Math.round(Math.random() * quantitySingleRareSkins)
+    let randomPlusLucky: number = random - luckyChance
     if (randomPlusLucky <= 0.0026) {
       return 20 + randomItem
     } else if (0.0026 < randomPlusLucky && randomPlusLucky <= 0.009) {
@@ -61,17 +67,17 @@ const CaseItemData = () => {
   }
 
   // Продаем айтем
-  const sellItem = (price) => {
+  const sellItem = (price: number): void => {
     setIsCarousel(false)
     setDropItem(false)
     setLeaveSkin(false)
 
-    let arr = inventory.filter((_, i) => i !== inventory.length - 1)
+    let arr: IInventoryInner[] = inventory.filter((_, i) => i !== inventory.length - 1)
     updateInventoryUser(uid, arr)
-    updateBalanceUser(uid, Math.round(balance + price))
+    updateBalanceUser(uid, balance + price)
   }
 
-  const updateInvetory = (item) => {
+  const updateInvetory = (item: IInventoryInner): void => {
     if (!inventory) {
       updateInventoryUser(uid, [item])
     } else {
@@ -80,18 +86,22 @@ const CaseItemData = () => {
     }
   }
 
-  const leaveSkinInProfile = (item) => {
+  const leaveSkinInProfile = (): void => {
     setLeaveSkin(false)
     setIsCarousel(false)
     setDropItem(false)
   }
 
-  const openCase = () => {
-    const item = randomRareItem()
-    const indexSkinItems = caseData.skins[item].skinItems.length / 2 - 1
-    let dataSkinData = caseData.skins[item]
+  const openCase = (): void => {
+    const item: number = randomRareItem()
+    let indexSkinItems: number = 0
+    let dataSkinData: ISkin
+    if (!Array.isArray(caseData)) {
+      indexSkinItems = caseData.skins[item].skinItems.length / 2 - 1
+      dataSkinData = caseData.skins[item]
+    }
 
-    const setStatTrak = () => {
+    const setStatTrak = (): number => {
       if (Math.random() <= 0.1) {
         return indexSkinItems + 1
       } else {
@@ -99,9 +109,9 @@ const CaseItemData = () => {
       }
     }
 
-    let fullDataSkinData = dataSkinData.skinItems[Math.round(Math.random() * indexSkinItems) + setStatTrak()]
+    let fullDataSkinData: ISkinItems = dataSkinData.skinItems[Math.round(Math.random() * indexSkinItems) + setStatTrak()]
 
-    const skinItem = {
+    const skinItem: IInventoryInner = {
       skinId: dataSkinData.skinId,
       skinTitle: dataSkinData.skinTitle,
       type: dataSkinData.type,
@@ -113,7 +123,9 @@ const CaseItemData = () => {
     }
     updateInvetory(skinItem)
     setIsCarousel(true)
-    updateBalanceUser(uid, balance - caseData.price)
+    if (!Array.isArray(caseData)) {
+      updateBalanceUser(uid, balance - caseData.price)
+    }
     setSkinItem(skinItem)
     setDropPrice(skinItem.price)
     setDuringCarousel(true)
@@ -127,44 +139,50 @@ const CaseItemData = () => {
   }
 
   // Ставим троеточие для названия скина если ширина пользователя меньше 415px
-  const adaptiveWord = (word, maxLength) => {
-    if (String(word).length > maxLength && word) {
-      return String(word).slice(0, maxLength) + '...'
+  const adaptiveWord = (word: string, maxLength: number): string => {
+    if (word.length > maxLength && word) {
+      return word.slice(0, maxLength) + '...'
     } else {
-      return String(word)
+      return word
     }
   }
 
   const listRandomSkinCarousel = () => {
     let fullObjSkins = []
     // массив случайных скинов
-    for (let i = 0; i < caseData.skins.length * 2 - 2; i++) {
-      let random = Math.random()
-      let randomCaseData = caseData.skins[Math.round(random * (caseData.skins.length - 6))]
-      let randomSkins = {
-        skinTitle: randomCaseData.skinTitle,
-        imageUrl: randomCaseData.skinItems[0].image,
-        color: randomCaseData.color
-      }
+    if (!Array.isArray(caseData)) {
+      for (let i = 0; i < caseData.skins.length * 2 - 2; i++) {
+        let random: number = Math.random()
+        let randomCaseData: ISkin = caseData.skins[Math.round(random * (caseData.skins.length - 6))]
+        let randomSkins: {
+          skinTitle: string,
+          imageUrl: string,
+          color: string,
+        } = {
+          skinTitle: randomCaseData.skinTitle,
+          imageUrl: randomCaseData.skinItems[0].image,
+          color: randomCaseData.color
+        }
 
-      if (i === 43) {
-        fullObjSkins.push(skinItem)
-      } else {
-        fullObjSkins.push(randomSkins)
+        if (i === 43) {
+          fullObjSkins.push(skinItem)
+        } else {
+          fullObjSkins.push(randomSkins)
+        }
       }
     }
-
+    
     return (
-      <Carousel fullObjSkins={fullObjSkins} skinsLength={caseData.skins.length} />
+      <Carousel fullObjSkins={fullObjSkins} skinsLength={!Array.isArray(caseData) && caseData.skins.length} />
     )
   }
 
-  if (loading || caseData.length === 0) {
+  if (loading || Array.isArray(caseData)) {
     return <img src={loadingIcon} className={'loading'} alt='' />
   }
 
   return (
-    <div>
+    <>
       <div className={'container container-transparent'}>
         <div className={'info'}>
           <h1>{caseData.title}</h1>
@@ -201,8 +219,7 @@ const CaseItemData = () => {
             ))}
         </div>
       </div>
-    </div>
-
+    </>
   )
 }
 

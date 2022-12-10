@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-interface ISkinItems {
+export interface ISkinItems {
   StatTrak: boolean,
   property: string,
   image: string,
   price: number
 }
 
-interface ISkin {
+export interface ISkin {
   skinId: number,
   color: string,
   type: string,
@@ -25,7 +25,7 @@ interface ICase {
 }
 
 interface IDataSlice {
-  caseData: ICase[],
+  caseData: [] | ICase,
   loading: boolean,
   status: boolean
 }

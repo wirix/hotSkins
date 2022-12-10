@@ -1,20 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState, FC } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { IInventoryInner } from '../../../@types/interfaces'
+import { IFilterRare } from '../../../redux/slices/filterSlice'
+import { RootState } from '../../../redux/store'
 import { getSortedInventory } from '../../../utils/getSortedInventory'
+import { TypeSellItem } from '../Profile'
 import './Inventory.scss'
 
-const Inventory = ({ inventory, uid, sellItem }) => {
-  const inventoryReverse = inventory !== undefined ? inventory.slice().reverse() : []
-  const inventoryLength = inventory !== undefined ? inventory.length : 0
-  const filter = useSelector(state => state.filter.filter)
-  const [currentCategory, setCurrentCategory] = useState([])
-  const [completedInventory, setCompletedInventory] = useState([])
-  const completedLength = inventory !== undefined ? completedInventory.length : 0
+interface ICategoryName<TValue> {
+  [index: string]: TValue
+}
+
+interface IInventoryProps {
+  uid: string,
+  inventory: IInventoryInner[],
+  sellItem: TypeSellItem
+}
+
+const Inventory: FC<IInventoryProps> = ({ uid, inventory, sellItem }) => {
+  const inventoryReverse: IInventoryInner[] = inventory !== undefined ? inventory.slice().reverse() : []
+  const inventoryLength: number = inventory !== undefined ? inventory.length : 0
+  const filter: IFilterRare = useSelector((state: RootState) => state.filter.filter)
+  const [currentCategory, setCurrentCategory] = useState<string[]>([])
+  const [completedInventory, setCompletedInventory] = useState <IInventoryInner[]>([])
+  const completedLength: number = inventory !== undefined ? completedInventory.length : 0
 
   // выбор категориии
   useEffect(() => {
-    let categoryName = {
+    let categoryName: ICategoryName<string> = {
       mysteryRare: 'Covert Mystery',
       covertRare: 'Covert',
       classifiedRare: 'Classified',
@@ -68,14 +82,14 @@ const Inventory = ({ inventory, uid, sellItem }) => {
   return (
     <div className={'container-inventory'}>
       <div className={'profile-skin'}>
-        {completedInventory.map((item, i) => (
+        {completedInventory.map((item: IInventoryInner, i: number) => (
           <div key={i} className={'profile-skin-item'}>
             <img src={item.imageUrl} alt="" />
             <span>{item.price} ₽</span>
             <div className={`light light-${item.color === 'Covert Mystery' ? 'Mystery' : item.color}`}></div>
             <button
               className={`btn btn-small-${item.color === 'Covert Mystery' ? 'Mystery' : item.color}`}
-              onClick={() => sellItem(uid, item.index, Number(item.price).toFixed(2))}>Продать</button>
+              onClick={() => sellItem(uid, item.index, item.price)}>Продать</button>
           </div>
         ))}
       </div>

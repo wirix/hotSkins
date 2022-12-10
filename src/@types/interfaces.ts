@@ -2,7 +2,7 @@ export interface IInventoryInner {
   StatTrak: boolean,
   color: string,
   imageUrl: string,
-  index: number,
+  index?: number,
   price: number,
   property: string,
   skinId: number,
