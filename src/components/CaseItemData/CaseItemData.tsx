@@ -12,6 +12,12 @@ import ControlBtn from './ControlBtn/ControlBtn'
 import { RootState, useAppDispatch } from '../../redux/store'
 import { IInventoryInner } from '../../@types/interfaces'
 
+export interface IRandomSkins {
+  color: string,
+  imageUrl: string,
+  skinTitle: string
+}
+
 const CaseItemData: FC = () => {
   const params = useParams()
   const id: string = params.id
@@ -20,11 +26,11 @@ const CaseItemData: FC = () => {
 
   let clientWidth: number = document.body.clientWidth
   const random: number = Math.random()
-  
+
   const { caseData, loading } = useSelector((state: RootState) => state.caseData)
   const { balance, uid, luckyChance, inventory } = useSelector((state: RootState) => state.login)
   const [isCarousel, setIsCarousel] = useState<boolean>(false);
-  const [skinItem, setSkinItem] = useState(null)
+  const [skinItem, setSkinItem] = useState<null | IInventoryInner>(null)
   const [allowBuy, setAllowBuy] = useState<boolean>(false)
   const [dropItem, setDropItem] = useState<boolean>(false)
   const [dropPrice, setDropPrice] = useState<number>(0)
@@ -148,17 +154,13 @@ const CaseItemData: FC = () => {
   }
 
   const listRandomSkinCarousel = () => {
-    let fullObjSkins = []
+    let fullObjSkins: (IInventoryInner | IRandomSkins)[] = []
     // массив случайных скинов
     if (!Array.isArray(caseData)) {
       for (let i = 0; i < caseData.skins.length * 2 - 2; i++) {
         let random: number = Math.random()
         let randomCaseData: ISkin = caseData.skins[Math.round(random * (caseData.skins.length - 6))]
-        let randomSkins: {
-          skinTitle: string,
-          imageUrl: string,
-          color: string,
-        } = {
+        let randomSkins: IRandomSkins = {
           skinTitle: randomCaseData.skinTitle,
           imageUrl: randomCaseData.skinItems[0].image,
           color: randomCaseData.color
@@ -170,8 +172,9 @@ const CaseItemData: FC = () => {
           fullObjSkins.push(randomSkins)
         }
       }
+      console.log(fullObjSkins)
     }
-    
+
     return (
       <Carousel fullObjSkins={fullObjSkins} skinsLength={!Array.isArray(caseData) && caseData.skins.length} />
     )
@@ -201,14 +204,13 @@ const CaseItemData: FC = () => {
           dropItem={dropItem}
           sellItem={sellItem}
           leaveSkinInProfile={leaveSkinInProfile}
-          dropPrice={dropPrice}
-          skinItem={skinItem} />
+          dropPrice={dropPrice} />
       </div>
       <div className={'container container-transparent container-black'}>
         <h2>Содержимое кейса</h2>
         <div className={'skins'}>
           {caseData &&
-            caseData.skins.map(skin => (
+            caseData.skins.map((skin: ISkin) => (
               <div key={skin.skinId} className={`skin ${skin.color}`}>
                 <img src={skin.skinItems[0].image} alt='' />
                 <div className={'skin-title'}>

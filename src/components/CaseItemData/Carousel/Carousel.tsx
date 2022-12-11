@@ -1,14 +1,21 @@
-import React from 'react'
+import { FC } from 'react'
+import { IInventoryInner } from '../../../@types/interfaces'
+import { IRandomSkins } from '../CaseItemData'
 import './Carousel.scss'
 
-const Carousel = ({ fullObjSkins, skinsLength }) => {
-  let randomTranslateX = Math.random() * 55
+interface ICarouselProps {
+  fullObjSkins: (IRandomSkins | IInventoryInner)[],
+  skinsLength: number
+}
+
+const Carousel: FC<ICarouselProps> = ({ fullObjSkins, skinsLength }) => {
+  let randomTranslateX: number = Math.random() * 55
 
   return (
     <div className={'carousel'}>
       <div className={'carousel-border'}></div>
       <div className={'carousel-container'} style={{ transform: `translateX(${Math.random() >= 0.5 ? -randomTranslateX : randomTranslateX}px)` }}>
-        {fullObjSkins.map((obj, i) => (
+        {fullObjSkins.map((obj: IRandomSkins | IInventoryInner, i: number) => (
           <div
             key={i}
             className={`carousel-item ${obj.color}`}

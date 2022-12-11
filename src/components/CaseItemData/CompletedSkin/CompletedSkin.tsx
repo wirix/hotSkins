@@ -1,7 +1,7 @@
-import React from 'react'
+import { IInventoryInner } from '../../../@types/interfaces'
 import './CompletedSkin.scss'
 
-const CompletedSkin = ({ skinItem }) => {
+const CompletedSkin = ({ skinItem }: { skinItem: IInventoryInner }) => {
   return (
     <div className={`completed-skin`}>
       <span className={`bg ${skinItem.color}`}></span>

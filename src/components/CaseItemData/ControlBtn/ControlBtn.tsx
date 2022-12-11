@@ -1,8 +1,22 @@
-import React from 'react'
+import { User } from 'firebase/auth'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import './ControlBtn.scss'
 
-const ControlBtn = ({
+interface IControlBtnProps {
+  isAuth: User,
+  allowBuy: boolean,
+  duringCarousel: boolean,
+  leaveSkin: boolean,
+  openCase: () => void,
+  price: number,
+  dropItem: boolean,
+  sellItem: (price: number) => void,
+  dropPrice: number,
+  leaveSkinInProfile: () => void,
+}
+
+const ControlBtn: FC<IControlBtnProps> = ({
   isAuth,
   allowBuy,
   duringCarousel,
@@ -10,7 +24,6 @@ const ControlBtn = ({
   openCase,
   price,
   dropItem,
-  skinItem,
   sellItem,
   dropPrice,
   leaveSkinInProfile,
@@ -36,7 +49,7 @@ const ControlBtn = ({
         dropItem &&
         leaveSkin &&
         <div className={'two-btns'}>
-          <button onClick={() => leaveSkinInProfile(skinItem)} className={'btn btn-min-width'}>Оставить</button>
+          <button onClick={() => leaveSkinInProfile()} className={'btn btn-min-width'}>Оставить</button>
           <button className={'btn btn-min-width'} onClick={() => sellItem(dropPrice)}>Продать за {dropPrice}₽</button>
         </div>}
 
