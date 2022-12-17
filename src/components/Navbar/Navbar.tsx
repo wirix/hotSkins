@@ -43,7 +43,7 @@ const Navbar = () => {
       <header className={'header'}>
         <div className={`navbar-mobile ${isNavbar ? 'navbar-mobile-open' : 'navbar-mobile-close'}`}>
           <div className={'container container-transparent'}>
-            <div className={'link'}>
+            <nav className={'link'}>
               {isAuth &&
                 <Link to='/profile' className={'link-item'} onClick={() => setIsNavbar(false)}>
                   Профиль
@@ -67,7 +67,7 @@ const Navbar = () => {
                 <Link onClick={linkLogout} to='/signin' className={'link-item'}>
                   Войти
                 </Link>}
-            </div>
+            </nav>
           </div>
         </div>
         <div className={'burger'}>

@@ -78,7 +78,7 @@ const Inventory: FC<IInventoryProps> = ({ uid, inventory, sellItem }) => {
       </div>
     </div>
   }
-
+  
   return (
     <div className={'container-inventory'}>
       <div className={'profile-skin'}>

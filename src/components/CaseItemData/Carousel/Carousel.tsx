@@ -10,7 +10,6 @@ interface ICarouselProps {
 
 const Carousel: FC<ICarouselProps> = ({ fullObjSkins, skinsLength }) => {
   let randomTranslateX: number = Math.random() * 55
-
   return (
     <div className={'carousel'}>
       <div className={'carousel-border'}></div>

@@ -12,6 +12,7 @@
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
+    "ahooks": "^3.7.2",
     "axios": "^1.1.2",
     "embla-carousel-autoplay": "^7.0.3",
     "embla-carousel-react": "^7.0.3",
@@ -29,6 +30,7 @@
     "sass": "^1.55.0",
     "typescript": "^4.9.3",
     "web-vitals": "^2.1.4",
+    "why-did-you-update": "^1.0.8",
     "yup": "^0.32.11"
   },
   "scripts": {

@@ -1,4 +1,4 @@
-import { useEffect, useState, FC } from 'react'
+import { useEffect, useState, FC, memo } from 'react'
 import './CaseItemData.scss'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -18,7 +18,7 @@ export interface IRandomSkins {
   skinTitle: string
 }
 
-const CaseItemData: FC = () => {
+const CaseItemData: FC = memo(() => {
   const params = useParams()
   const id: string = params.id
   const dispatch = useAppDispatch()
@@ -77,7 +77,6 @@ const CaseItemData: FC = () => {
     setIsCarousel(false)
     setDropItem(false)
     setLeaveSkin(false)
-
     let arr: IInventoryInner[] = inventory.filter((_, i) => i !== inventory.length - 1)
     updateInventoryUser(uid, arr)
     updateBalanceUser(uid, balance + price)
@@ -172,7 +171,6 @@ const CaseItemData: FC = () => {
           fullObjSkins.push(randomSkins)
         }
       }
-      console.log(fullObjSkins)
     }
 
     return (
@@ -223,6 +221,6 @@ const CaseItemData: FC = () => {
       </div>
     </>
   )
-}
+})
 
 export default CaseItemData

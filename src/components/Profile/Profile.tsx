@@ -16,7 +16,8 @@ const Profile: FC = () => {
   const sellItem: TypeSellItem = (uid, indexItem, price) => {
     let arr: IInventoryInner[] = inventory.filter((_, i) => i !== indexItem)
     updateInventoryUser(uid, arr)
-    updateBalanceUser(uid, balance + price)
+    // округление до сотых
+    updateBalanceUser(uid, parseFloat((balance + price).toFixed(2)))
   }
 
   let inventoryLength: number = inventory !== undefined ? inventory.length : 0

@@ -1,5 +1,12 @@
-export const getSortedInventory = (setCompletedInventory, inventoryReverse, currentCategory, inventoryLength) => {
-  let currentItems = []
+import { IInventoryInner } from "../@types/interfaces"
+
+export const getSortedInventory = (
+  setCompletedInventory: React.Dispatch<React.SetStateAction<IInventoryInner[]>>, 
+  inventoryReverse: IInventoryInner[], 
+  currentCategory: string[], 
+  inventoryLength: number
+): void => {
+  let currentItems: IInventoryInner[] = []
   for (let key of currentCategory) {
     for (let i = 0; i < inventoryLength; i++) {
       if (inventoryReverse[i].color === key) {

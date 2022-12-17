@@ -1,3 +1,4 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
@@ -43,7 +44,7 @@ export const casesSlice = createSlice({
       state.loading = true;
       state.status = false
     })
-      .addCase(fetchCases.fulfilled, (state, action) => {
+      .addCase(fetchCases.fulfilled, (state, action: PayloadAction<ICasesData[] | []>) => {
         state.cases = action.payload;
         state.loading = false;
         state.status = true

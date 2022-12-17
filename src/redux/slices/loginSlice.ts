@@ -1,3 +1,4 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { IInventoryInner } from './../../@types/interfaces';
 import { createSlice } from '@reduxjs/toolkit'
 
@@ -25,7 +26,7 @@ export const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    setDataAccount: (state, actions) => {
+    setDataAccount: (state, actions: PayloadAction<ILoginSlice>) => {
       state.username = actions.payload.username
       state.email = actions.payload.email
       state.balance = Number(actions.payload.balance)
