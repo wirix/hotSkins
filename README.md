@@ -1,3 +1,4 @@
+<b>Ссылка на сайт:</b> <a href='https://wirix.github.io/hotSkins/#/home'>https://wirix.github.io/hotSkins/#/home</a>
 <div><b>Проект был написан на:</b></div>
 <div>
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="typescript" width="12" height="12"/>
